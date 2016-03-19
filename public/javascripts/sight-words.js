@@ -1,4 +1,6 @@
-(function($) {
+var sw = sw || {};
+
+(function(sw, $) {
   
   const FONTS = [
     'Arial,"Helvetica Neue",Helvetica,sans-serif', 
@@ -17,17 +19,57 @@
     'Papyrus,fantasy'
   ];
   
-  $("#btnOk").click(function() {
+  $('#btnOk').click(function() {
+    sw.wordSuccess($('#sightWord').text());
+    generate();
+  });
+  
+  $('#btnTryAgain').click(function() {
+    sw.wordFail($('#sightWord').text());
     generate();
   });
   
   function generate() {
-    $("#sightWord").css("font-family", FONTS[getRand(0, FONTS.length)]);
-    $("#sightWord").css("font-size", getRand(50, 200));
+    var $sightWordContainer = $('#sightWord');
+    
+    if(updateProgressBar()){
+      $('#btnOk').attr('disabled', true);
+      $('#btnTryAgain').attr('disabled', true);
+      showReport();
+    }else{
+      $sightWordContainer.css('font-family', sw.getRandItem(FONTS));
+      $sightWordContainer.css('font-size', sw.getRand(50, 250));
+      $sightWordContainer.text(sw.getRandSightWord());
+    }
+    
   }
   
-  function getRand(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
+  function updateProgressBar() {
+    var $pb = $('#completedProgress'), 
+        wordCount = sw.countTotalWords(), 
+        completedWords = wordCount - sw.countWordLeft();
+    
+    $pb.attr('aria-valuemax', wordCount);
+    $pb.attr('aria-valuenow', completedWords);
+    $pb.css('width', completedWords / wordCount * 100 + '%');
+    
+    return wordCount === completedWords;
   }
   
-})(jQuery);
+  function showReport() {
+    var $tbody = $('#statusReport > tbody');
+    
+    $tbody.children().remove();
+    
+    for(item of sw.statusReport()){
+      $tbody.append('              <tr><td>' + item.word + '</td><td>' + item.level + '</td><td>' + item.attempts + '</td></tr>');
+    }
+    
+    $('#reportPanel').show();
+  }
+  
+  $(document).ready(function() {
+    generate();
+  });
+  
+})(sw, jQuery);

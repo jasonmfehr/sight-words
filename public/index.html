@@ -15,31 +15,65 @@
       </div>
       
       <div class="row">
-        <div class="col-sm-4 text-center">
-          <button id="btnSkip" type="button" class="btn btn-lg btn-primary btn-xl">SKIP</button>
-        </div>
-        <div class="col-sm-4 text-center">
-          <button id="btnOk" type="button" class="btn btn-lg btn-success btn-xl">OK</button>
-        </div>
-        <div class="col-sm-4 text-center">
-          <button id="btnTryAgain" type="button" class="btn btn-lg btn-info btn-xl">TRY AGAIN</button>
-        </div>
-      </div>
-      
-      <div class="row">
         <div class="col-xs-12">
           <p>&nbsp;</p>
         </div>
       </div>
       
+      <!-- TODO switch to rows/cells instead of hardcoded widths -->
       <div class="well word-container">
         <p id="sightWord" class="vertical-center">test</p>
       </div>
+      
+      <div class="progress">
+        <div id="completedProgress" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">40% Complete (success)</span></div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-5 text-right">
+          <button id="btnTryAgain" type="button" class="btn btn-lg btn-info btn-xl">TRY AGAIN</button>
+        </div>
+        <div class="col-sm-2 text-center">
+          <p />
+        </div>
+        <div class="col-sm-5 text-left">
+          <button id="btnOk" type="button" class="btn btn-lg btn-success btn-xl">OK</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div id="reportPanel" class="panel panel-default" style="display: none;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Report</h3>
+            </div>
+            <div class="panel-body">
+              <table id="statusReport" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Word</th>
+                    <th>Level</th>
+                    <th>Attempts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
     </div>
     
       
     <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
     <script src="javascripts/sight-words.js"></script>
+    <script src="javascripts/words.js"></script>
+    <script src="javascripts/helpers.js"></script>
+    <script src="javascripts/user.js"></script>
   </body>
 </html>
