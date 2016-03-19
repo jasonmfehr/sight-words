@@ -45,15 +45,15 @@ var sw = sw || {};
     { 'word': 'find', 'transform': true, 'status': NOT_SHOWN, 'attempts': 0, 'level': 3 }
   ];
   
-  const UCASE_FIRST = (str) => {
+  const UCASE_FIRST = function(str) {
     return str.slice(0,1).toUpperCase() + str.slice(1).toLowerCase();
   }
   
-  const UCASE_ALL = (str) => {
+  const UCASE_ALL = function(str) {
     return str.toUpperCase();
   }
   
-  const LCASE_ALL = (str) => {
+  const LCASE_ALL = function(str) {
     return str.toLowerCase();
   }
   
@@ -65,7 +65,7 @@ var sw = sw || {};
   
   //TODO this function is extremely dangerous as it blindly recurses assuming the state of the SIGHT_WORDS array is being properly managed
   //returns a random sight word that is NOT_SHOWN or TRY_AGAIN and is within the skill level of the user
-  sw.getRandSightWord = () => {
+  sw.getRandSightWord = function() {
     var wordObj, transformFunc;
     
     wordObj = sw.getRandItem(SIGHT_WORDS);
@@ -83,7 +83,7 @@ var sw = sw || {};
   }
   
   //counts the NOT_SHOWN and TRY_AGAIN words within the skill level of the user
-  sw.countWordLeft = () => {
+  sw.countWordLeft = function() {
     var wordsLeft = 0;
     
     for(w of SIGHT_WORDS){
@@ -96,7 +96,7 @@ var sw = sw || {};
   }
   
   //counts the number of words within the current user's skill level
-  sw.countTotalWords = () => {
+  sw.countTotalWords = function() {
     var wordCount = 0;
     
     for(w of SIGHT_WORDS){
@@ -110,17 +110,17 @@ var sw = sw || {};
   }
   
   //sets the status of a word to SUCCESS
-  sw.wordSuccess = (wordStr) => {
+  sw.wordSuccess = function(wordStr) {
     updateWord(wordStr, SUCCESS);
   }
   
   //sets the status of a word to TRY_AGAIN
-  sw.wordFail = (wordStr) => {
+  sw.wordFail = function(wordStr) {
     updateWord(wordStr, TRY_AGAIN);
   }
   
   //builds an object listing the status of each word and how many attempts it took to get there
-  sw.statusReport = () => {
+  sw.statusReport = function() {
     var report = [];
     
     for(w of SIGHT_WORDS){
