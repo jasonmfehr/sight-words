@@ -8,6 +8,10 @@
   margin-top: 50px;
 }
 
+.v-whitespace-md {
+  margin-top: 25px;
+}
+
 .word-container {
   width: 85%;
   height: 275px;
@@ -25,38 +29,7 @@
   transform: translate(-50%, -50%);
 }
 
-.size-a {
-  text-align: center;
-  font-size: 50px;
-}
-
-.size-b {
-  text-align: center;
-  font-size: 75px;
-}
-
-.size-c {
-  text-align: center;
-  font-size: 100px;
-}
-
-.size-d {
-  text-align: center;
-  font-size: 125px;
-}
-
-.size-e {
-  text-align: center;
-  font-size: 150px;
-}
-
-.size-f {
-  text-align: center;
-  font-size: 175px;
-}
-
-.size-g {
-  text-align: center;
-  font-size: 200px;
+body {
+  padding-top: 70px;
 }
 

@@ -62,10 +62,14 @@ var sw = sw || {};
     $tbody.children().remove();
     
     for(item of sw.statusReport()){
-      $tbody.append('              <tr><td>' + item.word + '</td><td>' + item.level + '</td><td>' + item.attempts + '</td></tr>');
+      $tbody.append('              <tr><td>' + item.level + '</td><td>' + item.word + '</td><td>' + item.attempts + '</td></tr>');
     }
     
-    $('#reportPanel').show();
+    $('#mainContainer').hide();
+    $('#reportContainer').show();
+    setTimeout(function() {
+      $('#successAlert').slideUp(2000)
+    },5000);
   }
   
   $(document).ready(function() {

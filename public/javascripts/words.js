@@ -130,7 +130,15 @@ var sw = sw || {};
     }
     
     //TODO sort by level then alphabetically
-    return report;
+    return report.sort(function(first,second) {
+      if(first.level < second.level){
+        return -1;
+      }else if(first.level > second.level){
+        return 1;
+      }else{
+        return first.word.localeCompare(second.word);
+      }
+    });
   }
   
   //converts a status number into a human readable string
