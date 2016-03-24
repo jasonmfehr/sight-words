@@ -24,28 +24,39 @@ var sw = sw || {};
   ];
   
   $('#btnOk').click(function() {
+    disableButtons();
     sw.wordSuccess($('#sightWord').text());
     generate();
+    enableButtons();
   });
   
   $('#btnTryAgain').click(function() {
+    disableButtons();
     sw.wordFail($('#sightWord').text());
     generate();
+    enableButtons();
   });
+  
+  $('#startOver').click(function() {
+    window.location.reload();
+  });
+  
+  $(document).ready(function() {
+    generate();
+  });
+  
   
   function generate() {
     var $sightWordContainer = $('#sightWord');
     
     if(updateProgressBar()){
-      $('#btnOk').attr('disabled', true);
-      $('#btnTryAgain').attr('disabled', true);
+      disableButtons();
       showReport();
     }else{
       $sightWordContainer.css('font-family', sw.getRandItem(FONTS));
       $sightWordContainer.css('font-size', sw.getRand(MIN_FONT_SIZE, MAX_FONT_SIZE));
       $sightWordContainer.text(sw.getRandSightWord());
     }
-    
   }
   
   function updateProgressBar() {
@@ -60,15 +71,14 @@ var sw = sw || {};
     return wordCount === completedWords;
   }
   
-  function showReport() {
-    var $tbody = $('#statusReport > tbody');
-    
-    $tbody.children().remove();
-    
-    for(item of sw.statusReport()){
-      $tbody.append('              <tr><td>' + item.level + '</td><td>' + item.word + '</td><td>' + item.attempts + '</td></tr>');
+  $(document).on('show.bs.modal', function(e) {
+    if(e.target.id === 'reportModal'){
+      generateReport($('#statusReportModal > tbody'), true);
     }
-    
+  });
+  
+  function showReport() {
+    generateReport($('#statusReport > tbody'));
     $('#mainContainer').hide();
     $('#reportContainer').show();
     setTimeout(function() {
@@ -76,8 +86,26 @@ var sw = sw || {};
     },5000);
   }
   
-  $(document).ready(function() {
-    generate();
-  });
+  function generateReport($tbody, showStatus) {
+    $tbody.children().remove();
+    
+    for(item of sw.statusReport()){
+      var status = '';
+      if(showStatus){
+        status = '<td>' + item.status + '</td>';
+      }
+      $tbody.append('              <tr><td>' + item.level + '</td><td>' + item.word + '</td><td>' + item.attempts + '</td>' + status + '</tr>');
+    }
+  }
   
+  function disableButtons() {
+    $('#btnOk').attr('disabled', true);
+    $('#btnTryAgain').attr('disabled', true);
+  }
+  
+  function enableButtons() {
+    $('#btnOk').removeAttr('disabled');
+    $('#btnTryAgain').removeAttr('disabled');
+  }
+
 })(sw, jQuery);
