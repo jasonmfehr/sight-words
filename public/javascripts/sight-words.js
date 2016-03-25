@@ -41,6 +41,10 @@ var sw = sw || {};
     window.location.reload();
   });
   
+  $('#navToggle').click(function() {
+    sw.timer.pause();
+  });
+  
   $(document).ready(function() {
     $('#pauseModal').modal();
   });
