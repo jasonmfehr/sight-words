@@ -27,14 +27,14 @@ var sw = sw || {};
     disableButtons();
     sw.wordSuccess($('#sightWord').text());
     generate();
-    enableButtons();
+    enableButtonsWithDelay();
   });
   
   $('#btnTryAgain').click(function() {
     disableButtons();
     sw.wordFail($('#sightWord').text());
     generate();
-    enableButtons();
+    enableButtonsWithDelay();
   });
   
   $('#startOver').click(function() {
@@ -42,7 +42,7 @@ var sw = sw || {};
   });
   
   $(document).ready(function() {
-    generate();
+    $('#pauseModal').modal();
   });
   
   
@@ -57,6 +57,8 @@ var sw = sw || {};
       $sightWordContainer.css('font-size', sw.getRand(MIN_FONT_SIZE, MAX_FONT_SIZE));
       $sightWordContainer.text(sw.getRandSightWord());
     }
+    
+    sw.timer.start();
   }
   
   function updateProgressBar() {
@@ -74,6 +76,26 @@ var sw = sw || {};
   $(document).on('show.bs.modal', function(e) {
     if(e.target.id === 'reportModal'){
       generateReport($('#statusReportModal > tbody'), true);
+    }else if(e.target.id === 'pauseModal' && e.relatedTarget){
+      var $button = $(e.relatedTarget);
+      
+      sw.timer.pause();
+      $('#pauseModalLabel').text($button.data('text'));
+      $('#pauseModalButton').text($button.data('button'));
+      $(e.target).data('mode', $button.data('modal-mode'));
+    }
+  });
+  
+  $(document).on('hidden.bs.modal', function(e) {
+    if(e.target.id === 'pauseModal'){
+      var $target = $(e.target);
+      
+      if($target.data('mode') === 'start'){
+        sw.timer.start();
+        generate();
+      }else{
+        sw.timer.pause();
+      }
     }
   });
   
@@ -94,7 +116,7 @@ var sw = sw || {};
       if(showStatus){
         status = '<td>' + item.status + '</td>';
       }
-      $tbody.append('              <tr><td>' + item.level + '</td><td>' + item.word + '</td><td>' + item.attempts + '</td>' + status + '</tr>');
+      $tbody.append('              <tr><td>' + item.level + '</td><td>' + item.word + '</td><td>' + item.attempts + '</td><td>' + item.time + '</td>' + status + '</tr>');
     }
   }
   
@@ -107,5 +129,9 @@ var sw = sw || {};
     $('#btnOk').removeAttr('disabled');
     $('#btnTryAgain').removeAttr('disabled');
   }
-
+  
+  function enableButtonsWithDelay() {
+    setTimeout(enableButtons, 250);
+  }
+  
 })(sw, jQuery);

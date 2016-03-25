@@ -11,14 +11,14 @@
   <body>
     
     <!-- reload confirmation modal -->
-    <div id="reloadConfirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div id="reloadConfirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reloadConfirmModalBody">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <div class="modal-body">
-            <p>Are you sure you want to start over? <br />  All in progress work will be lost!</p>
+            <p id="reloadConfirmModalBody">Are you sure you want to start over? <br />  All in progress work will be lost!</p>
           </div>
           <div class="modal-footer">
             <button id="startOver" type="button" class="btn btn-primary">Start Over</button>
@@ -29,8 +29,8 @@
     </div>
     
     <!-- report modal -->
-    <div id="reportModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-      <div class="modal-dialog modal-sm">
+    <div id="reportModal" class="modal fade" tabindex="-1" role="dialog" aria-label="progress report table">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -43,6 +43,7 @@
                   <th>Level</th>
                   <th>Word</th>
                   <th>Attempts</th>
+                  <th>Time</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -52,6 +53,20 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- pause modal -->
+    <div id="pauseModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pauseModalLabel" data-mode="start">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p id="pauseModalLabel">Tap the button below to get started!</p>
+          </div>
+          <div class="modal-footer">
+            <button id="pauseModalButton" type="button" class="btn btn-default" data-dismiss="modal">Start</button>
           </div>
         </div>
       </div>
@@ -76,6 +91,7 @@
             <li><a href="#" data-toggle="modal" data-target="#reloadConfirmModal">Start Over</a></li>
             <li><a id="navReport" href="#" data-toggle="modal" data-target="#reportModal">Report</a></li>
             <li><a id="navSave" href="#">Save</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#pauseModal" data-modal-mode="pause" data-text='Paused.  Tap the button to continue' data-button='Continue'>Pause</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -101,7 +117,7 @@
 
         <!-- TODO switch to rows/cells instead of hardcoded widths -->
         <div class="well text-center word-container">
-          <p id="sightWord" class="vertical-align">test</p>
+          <p id="sightWord" class="vertical-align" />
         </div>
 
         <div class="progress">
@@ -141,6 +157,7 @@
                       <th>Level</th>
                       <th>Word</th>
                       <th>Attempts</th>
+                      <th>Time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -164,5 +181,6 @@
     <script src="javascripts/words.js"></script>
     <script src="javascripts/helpers.js"></script>
     <script src="javascripts/user.js"></script>
+    <script src="javascripts/timer.js"></script>
   </body>
 </html>
