@@ -1,0 +1,195 @@
+/* ipad landscape */
+@media only screen and (min-width: 768px) and (min-width: 1024px) and (orientation : landscape), not screen {
+  
+  .fs0 {
+    font-size: 50px;
+  }
+  
+  .fs1 {
+    font-size: 70px;
+  }
+  
+  .fs2 {
+    font-size: 90px;
+  }
+  
+  .fs3 {
+    font-size: 100px;
+  }
+  
+  .fs4 {
+    font-size: 110px;
+  }
+  
+  .fs5 {
+    font-size: 130px;
+  }
+  
+  .fs6 {
+    font-size: 140px;
+  }
+  
+  .fs7 {
+    font-size: 150px;
+  }
+  
+  .fs8 {
+    font-size: 170px;
+  }
+  
+  .fs9 {
+    font-size: 190px;
+  }
+  
+  .word-container {
+    height: 275px;
+  }
+  
+}
+
+/* ipad portrait */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation : portrait) {
+  
+  .fs0 {
+    font-size: 50px;
+  }
+  
+  .fs1 {
+    font-size: 70px;
+  }
+  
+  .fs2 {
+    font-size: 80px;
+  }
+  
+  .fs3 {
+    font-size: 90px;
+  }
+  
+  .fs4 {
+    font-size: 100px;
+  }
+  
+  .fs5 {
+    font-size: 110px;
+  }
+  
+  .fs6 {
+    font-size: 120px;
+  }
+  
+  .fs7 {
+    font-size: 130px;
+  }
+  
+  .fs8 {
+    font-size: 140px;
+  }
+  
+  .fs9 {
+    font-size: 150px;
+  }
+  
+  .word-container {
+    height: 275px;
+  }
+  
+}
+
+/* iphone 6 landscape */
+@media only screen and (max-width: 667px) and (orientation: landscape) {
+  
+  .fs0 {
+    font-size: 50px;
+  }
+  
+  .fs1 {
+    font-size: 55px;
+  }
+  
+  .fs2 {
+    font-size: 60px;
+  }
+  
+  .fs3 {
+    font-size: 65px;
+  }
+  
+  .fs4 {
+    font-size: 70px;
+  }
+  
+  .fs5 {
+    font-size: 75px;
+  }
+  
+  .fs6 {
+    font-size: 80px;
+  }
+  
+  .fs7 {
+    font-size: 85px;
+  }
+  
+  .fs8 {
+    font-size: 90px;
+  }
+  
+  .fs9 {
+    font-size: 100px;
+  }
+  
+  .word-container {
+    height: 160px;
+  }
+  
+}
+
+/* iphone 6 portrait */
+@media only screen and (max-width: 667px) and (orientation: portrait)  {
+  
+  .fs0 {
+    font-size: 50px;
+  }
+  
+  .fs1 {
+    font-size: 54px;
+  }
+  
+  .fs2 {
+    font-size: 57px;
+  }
+  
+  .fs3 {
+    font-size: 60px;
+  }
+  
+  .fs4 {
+    font-size: 64px;
+  }
+  
+  .fs5 {
+    font-size: 67px;
+  }
+  
+  .fs6 {
+    font-size: 60px;
+  }
+  
+  .fs7 {
+    font-size: 74px;
+  }
+  
+  .fs8 {
+    font-size: 77px;
+  }
+  
+  .fs9 {
+    font-size: 70px;
+  }
+  
+  .word-container {
+    height: 160px;
+  }
+  
+}

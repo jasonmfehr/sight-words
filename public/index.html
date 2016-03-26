@@ -7,6 +7,7 @@
     <title>Welcome to Sight Words!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheets/overrides.css">
+    <link rel="stylesheet" href="stylesheets/fonts.css">
   </head>
   <body>
     
@@ -116,7 +117,7 @@
 
         <!-- TODO switch to rows/cells instead of hardcoded widths -->
         <div class="well text-center word-container">
-          <p id="sightWord" class="vertical-align" />
+          <p id="sightWord" />
         </div>
 
         <div class="progress">
@@ -124,13 +125,13 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-5 text-right">
-            <button id="btnTryAgain" type="button" class="btn btn-lg btn-info">TRY AGAIN</button>
-          </div>
-          <div class="col-sm-2 text-center">
+          <div class="col-xs-4 text-center">
             <button class="btn btn-lg" data-toggle="modal" data-target="#pauseModal" data-modal-mode="pause" data-text='Paused.  Tap the button to continue' data-button='Continue'>PAUSE</button>
           </div>
-          <div class="col-sm-5 text-left">
+          <div class="col-xs-4 text-center">
+            <button id="btnTryAgain" type="button" class="btn btn-lg btn-info">TRY AGAIN</button>
+          </div>
+          <div class="col-xs-4 text-center">
             <button id="btnOk" type="button" class="btn btn-lg btn-success">OK</button>
           </div>
         </div>

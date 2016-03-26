@@ -5,6 +5,7 @@ var sw = sw || {};
   //TODO set min/max font sizes via media queries
   const MIN_FONT_SIZE = 50;
   const MAX_FONT_SIZE = 150;
+  const ALL_FONT_CLASSES = 'fs0 fs1 fs2 fs3 fs4 fs5 fs6 fs7 fs8 fs9';
   
   const FONTS = [
     'Arial,"Helvetica Neue",Helvetica,sans-serif', 
@@ -58,7 +59,7 @@ var sw = sw || {};
       showReport();
     }else{
       $sightWordContainer.css('font-family', sw.getRandItem(FONTS));
-      $sightWordContainer.css('font-size', sw.getRand(MIN_FONT_SIZE, MAX_FONT_SIZE));
+      $sightWordContainer.removeClass(ALL_FONT_CLASSES).addClass('fs' + sw.getRand(0,9));
       $sightWordContainer.text(sw.getRandSightWord());
     }
     
