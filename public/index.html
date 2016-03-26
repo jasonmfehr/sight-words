@@ -91,7 +91,6 @@
             <li><a href="#" data-toggle="modal" data-target="#reloadConfirmModal">Start Over</a></li>
             <li><a id="navReport" href="#" data-toggle="modal" data-target="#reportModal">Report</a></li>
             <li><a id="navSave" href="#">Save</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#pauseModal" data-modal-mode="pause" data-text='Paused.  Tap the button to continue' data-button='Continue'>Pause</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -126,13 +125,13 @@
 
         <div class="row">
           <div class="col-sm-5 text-right">
-            <button id="btnTryAgain" type="button" class="btn btn-lg btn-info btn-xl">TRY AGAIN</button>
+            <button id="btnTryAgain" type="button" class="btn btn-lg btn-info">TRY AGAIN</button>
           </div>
           <div class="col-sm-2 text-center">
-            <p />
+            <button class="btn btn-lg" data-toggle="modal" data-target="#pauseModal" data-modal-mode="pause" data-text='Paused.  Tap the button to continue' data-button='Continue'>PAUSE</button>
           </div>
           <div class="col-sm-5 text-left">
-            <button id="btnOk" type="button" class="btn btn-lg btn-success btn-xl">OK</button>
+            <button id="btnOk" type="button" class="btn btn-lg btn-success">OK</button>
           </div>
         </div>
       </div>

@@ -83,6 +83,8 @@ var sw = sw || {};
     }else if(e.target.id === 'pauseModal' && e.relatedTarget){
       var $button = $(e.relatedTarget);
       
+      sw.timer.pause();
+      
       $('#pauseModalLabel').text($button.data('text'));
       $('#pauseModalButton').text($button.data('button'));
       $('#pauseModal').data('mode', $button.data('modal-mode'));
