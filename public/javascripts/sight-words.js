@@ -2,27 +2,19 @@ var sw = sw || {};
 
 (function(sw, $) {
   
-  //TODO set min/max font sizes via media queries
-  const MIN_FONT_SIZE = 50;
-  const MAX_FONT_SIZE = 150;
-  const ALL_FONT_CLASSES = 'fs0 fs1 fs2 fs3 fs4 fs5 fs6 fs7 fs8 fs9';
+  const FONT_SIZE_CLASS_PREFIX = 'fs', FONT_SIZE_COUNT = 10, FONT_CLASS_PREFIX = 'font', FONT_COUNT = 12;
+  var ALL_FONT_CLASSES, ALL_FONT_SIZE_CLASSES;
+
+  //setup strings holding all available font classes and font size classes
+  ALL_FONT_SIZE_CLASSES = '';
+  for(var i=0; i<FONT_SIZE_COUNT; i++){
+    ALL_FONT_SIZE_CLASSES += ' ' + FONT_SIZE_CLASS_PREFIX + i;
+  }
   
-  const FONTS = [
-    'Arial,"Helvetica Neue",Helvetica,sans-serif', 
-    '"Arial Black","Arial Bold",Gadget,sans-serif', 
-    '"Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif', 
-    'Calibri,Candara,Segoe,"Segoe UI",Optima,Arial,sans-serif', 
-    '"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif', 
-    
-    '"Book Antiqua",Palatino,"Palatino Linotype","Palatino LT STD",Georgia,serif', 
-    'Cambria,Georgia,serif', 
-    '"Lucida Bright",Georgia,serif', 
-    'Rockwell,"Courier Bold",Courier,Georgia,Times,"Times New Roman",serif', 
-    'TimesNewRoman,"Times New Roman",Times,Baskerville,Georgia,serif', 
-    
-    '"Lucida Console","Lucida Sans Typewriter",monaco,"Bitstream Vera Sans Mono",monospace', 
-    'Papyrus,fantasy'
-  ];
+  ALL_FONT_CLASSES = '';
+  for(var i=0; i<FONT_COUNT; i++){
+    ALL_FONT_CLASSES += ' ' + FONT_CLASS_PREFIX + i;
+  }
   
   $('#btnOk').click(function() {
     disableButtons();
@@ -58,8 +50,9 @@ var sw = sw || {};
       disableButtons();
       showReport();
     }else{
-      $sightWordContainer.css('font-family', sw.getRandItem(FONTS));
-      $sightWordContainer.removeClass(ALL_FONT_CLASSES).addClass('fs' + sw.getRand(0,9));
+      //$sightWordContainer.css('font-family', sw.getRandItem(FONTS));
+      $sightWordContainer.removeClass(ALL_FONT_CLASSES).addClass(FONT_CLASS_PREFIX + sw.getRand(0, FONT_COUNT - 1));
+      $sightWordContainer.removeClass(ALL_FONT_SIZE_CLASSES).addClass(FONT_SIZE_CLASS_PREFIX + sw.getRand(0, FONT_SIZE_COUNT - 1));
       $sightWordContainer.text(sw.getRandSightWord());
     }
     

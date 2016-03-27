@@ -1,3 +1,51 @@
+.font0 {
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
+}
+
+.font1 {
+  font-family: 'Arial Black','Arial Bold',Gadget,sans-serif;
+}
+
+.font2 {
+  font-family: "Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif;
+}
+
+.font3 {
+  font-family: Calibri,Candara,Segoe,"Segoe UI",Optima,Arial,sans-serif; 
+}
+
+.font4 {
+  font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+}
+
+.font5 {
+  font-family: "Book Antiqua",Palatino,"Palatino Linotype","Palatino LT STD",Georgia,serif;
+}
+
+.font6 {
+  font-family: Cambria,Georgia,serif;
+}
+
+.font7 {
+  font-family: "Lucida Bright",Georgia,serif;
+}
+
+.font8 {
+  font-family: Rockwell,"Courier Bold",Courier,Georgia,Times,"Times New Roman",serif;
+}
+
+.font9 {
+  font-family: TimesNewRoman,"Times New Roman",Times,Baskerville,Georgia,serif;
+}
+
+.font10 {
+  font-family: "Lucida Console","Lucida Sans Typewriter",monaco,"Bitstream Vera Sans Mono",monospace;
+}
+
+.font11 {
+  font-family: Papyrus,fantasy;
+}
+
 /* ipad landscape */
 @media only screen and (min-width: 768px) and (min-width: 1024px) and (orientation : landscape), not screen {
   
