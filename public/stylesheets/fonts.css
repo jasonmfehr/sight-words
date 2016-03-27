@@ -1,3 +1,6 @@
+/*
+ * font families
+ */
 .font0 {
   font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
 }
@@ -45,6 +48,62 @@
 .font11 {
   font-family: Papyrus,fantasy;
 }
+
+
+/*
+ * font colors
+ */
+.fc0 {
+  color: black;
+}
+
+.fc1 {
+  color: black;
+}
+
+.fc2 {
+  color: black;
+}
+
+.fc3 {
+  color: black;
+}
+
+.fc4 {
+  color: black;
+}
+
+.fc5 {
+  color: blue;
+}
+
+.fc6 {
+  color: brown;
+}
+
+.fc7 {
+  color: green;
+}
+
+.fc8 {
+  color: pink;
+}
+
+.fc9 {
+  color: pink;
+}
+
+.fc10 {
+  color: pink;
+}
+
+.fc11 {
+  color: purple;
+}
+
+/*
+ * device specific css changes
+ */
 
 /* ipad landscape */
 @media only screen and (min-width: 768px) and (min-width: 1024px) and (orientation : landscape), not screen {

@@ -2,8 +2,12 @@ var sw = sw || {};
 
 (function(sw, $) {
   
-  const FONT_SIZE_CLASS_PREFIX = 'fs', FONT_SIZE_COUNT = 10, FONT_CLASS_PREFIX = 'font', FONT_COUNT = 12;
-  var ALL_FONT_CLASSES, ALL_FONT_SIZE_CLASSES;
+  const 
+    FONT_SIZE_CLASS_PREFIX = 'fs', FONT_SIZE_COUNT = 10, 
+    FONT_CLASS_PREFIX = 'font', FONT_COUNT = 12,
+    FONT_COLOR_CLASS_PREFIX = 'fc', FONT_COLOR_COUNT = 12;
+  
+  var ALL_FONT_CLASSES, ALL_FONT_SIZE_CLASSES, ALL_FONT_COLOR_CLASSES;
 
   //setup strings holding all available font classes and font size classes
   ALL_FONT_SIZE_CLASSES = '';
@@ -14,6 +18,11 @@ var sw = sw || {};
   ALL_FONT_CLASSES = '';
   for(var i=0; i<FONT_COUNT; i++){
     ALL_FONT_CLASSES += ' ' + FONT_CLASS_PREFIX + i;
+  }
+  
+  ALL_FONT_COLOR_CLASSES = '';
+  for(var i=0; i<FONT_COLOR_COUNT; i++){
+    ALL_FONT_COLOR_CLASSES += ' ' + FONT_COLOR_CLASS_PREFIX + i;
   }
   
   $('#btnOk').click(function() {
@@ -50,9 +59,10 @@ var sw = sw || {};
       disableButtons();
       showReport();
     }else{
-      //$sightWordContainer.css('font-family', sw.getRandItem(FONTS));
       $sightWordContainer.removeClass(ALL_FONT_CLASSES).addClass(FONT_CLASS_PREFIX + sw.getRand(0, FONT_COUNT - 1));
       $sightWordContainer.removeClass(ALL_FONT_SIZE_CLASSES).addClass(FONT_SIZE_CLASS_PREFIX + sw.getRand(0, FONT_SIZE_COUNT - 1));
+      $sightWordContainer.removeClass(ALL_FONT_COLOR_CLASSES).addClass(FONT_COLOR_CLASS_PREFIX + sw.getRand(0, FONT_COLOR_COUNT - 1));
+      
       $sightWordContainer.text(sw.getRandSightWord());
     }
     
