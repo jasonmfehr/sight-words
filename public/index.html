@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheets/overrides.css">
     <link rel="stylesheet" href="stylesheets/fonts.css">
+    <link rel="stylesheet" href="stylesheets/buttons.css">
   </head>
   <body>
     
@@ -125,13 +126,16 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-4 text-center">
-            <button class="btn btn-lg" data-toggle="modal" data-target="#pauseModal" data-modal-mode="pause" data-text='Paused.  Tap the button to continue' data-button='Continue'>PAUSE</button>
+          <div class="col-xs-3 text-center">
+            <button class="btn btn-lg btn-danger" disabled>GO BACK</button>
           </div>
-          <div class="col-xs-4 text-center">
+          <div class="col-sm-3 text-center">
+            <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#pauseModal" data-modal-mode="pause" data-text='Paused.  Tap the button to continue' data-button='Continue'>PAUSE</button>
+          </div>
+          <div class="col-xs-3 text-center">
             <button id="btnTryAgain" type="button" class="btn btn-lg btn-info">TRY AGAIN</button>
           </div>
-          <div class="col-xs-4 text-center">
+          <div class="col-sm-3 text-center">
             <button id="btnOk" type="button" class="btn btn-lg btn-success">OK</button>
           </div>
         </div>

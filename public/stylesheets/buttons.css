@@ -1,0 +1,40 @@
+/* ipad landscape or laptop */
+@media only screen and (min-width: 768px) and (min-width: 1024px) and (orientation : landscape), not screen {
+  
+  .btn-lg {
+    width: 150px;
+    height: 100px;
+    padding: 0px;
+  }
+  
+}
+
+
+/* ipad portrait */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation : portrait) {
+  
+  .btn-lg {
+    width: 125px;
+    height: 75px;
+    padding: 0px;
+  }
+  
+}
+
+/* iphone 6 landscape */
+@media only screen and (max-width: 667px) and (orientation: landscape) {
+  
+  .btn-lg {
+    margin-bottom: 25px;
+  }
+  
+}
+
+/* iphone 6 portrait */
+@media only screen and (max-width: 667px) and (orientation: portrait)  {
+  
+  .btn-lg {
+    margin-bottom: 25px;
+  }
+  
+}
