@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../db/db.js');
+const db = require('../db/db.js');
 
 /*
   /users                      (GET)
@@ -10,8 +10,42 @@ var db = require('../db/db.js');
 
 
 */
-router.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
+router.get('/users',function(req,res){
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  db.listUsers(function(users){
+    res.write(JSON.stringify(users));
+    res.end();
+  });
 });
+
+router.get('/users/:userId',function(req,res){
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write("userid is: " + req.params.userId);
+  res.end();
+});
+
+/*
+db.hasInProgressGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', function(result) {
+  console.log('user has in progress: ' + result);
+});
+*/
+
+/*
+db.addGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', '{"foo1":"bar1"}', function(newUuid) {
+  console.log('the new uuid is: ' + newUuid);
+})
+*/
+
+/*
+db.endGame('d42338d5-7421-45ea-8f84-9c694f4665b3', function(affectedRow) {
+  console.log('ended games count: ' + affectedRow);
+});
+*/
+
+/*
+db.listUsers(function(users) {
+  console.log('users: ' + JSON.stringify(users));
+});
+*/
 
 module.exports = router;

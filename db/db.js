@@ -1,7 +1,28 @@
 const pg = require('pg');
 const uuid = require('uuid')
 
-//pg.defaults.ssl = true;
+pg.defaults.ssl = true;
+
+
+exports.listUsers = (callback) => {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    if (err) throw err;
+
+    client.query(
+      {
+        name: 'list users',
+        text: 'SELECT id,user_name FROM users;'
+      }, 
+      function(err, results){
+        if (err) throw err;
+
+        done();
+
+        callback(results.rows);
+      }
+    );
+  });
+};
 
 exports.hasInProgressGame = (personId, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
