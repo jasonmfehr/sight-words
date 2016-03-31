@@ -30,7 +30,7 @@ CREATE TABLE public.people_data
    id uuid NOT NULL, 
    person_id uuid NOT NULL, 
    person_data jsonb NOT NULL, 
-   start_time timestamp with time zone, 
+   start_time timestamp with time zone NOT NULL DEFAULT now(), 
    end_time timestamp with time zone, 
    CONSTRAINT people_people_data_fk FOREIGN KEY (person_id) REFERENCES public.people (id) ON UPDATE CASCADE ON DELETE CASCADE, 
    CONSTRAINT people_data_pk PRIMARY KEY (id)
