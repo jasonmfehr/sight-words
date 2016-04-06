@@ -1,7 +1,7 @@
 const pg = require('pg');
 const uuid = require('uuid')
 
-pg.defaults.ssl = true;
+//pg.defaults.ssl = true;
 
 
 exports.listUsers = (callback) => {
@@ -18,7 +18,75 @@ exports.listUsers = (callback) => {
 
         done();
 
-        callback(results.rows);
+        process.nextTick(callback, results.rows);
+      }
+    );
+  });
+};
+
+exports.getUserAndPeople = (userId, callback) => {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    if (err) throw err;
+
+    client.query(
+      {
+        name: 'get user and people',
+        text: 'SELECT u.id AS user_id, u.user_name, p.id AS person_id, p.person_name, p.grade, p.min_level, p.max_level FROM public.users u INNER JOIN public.people p ON u.id = p.user_id WHERE u.id=$1;',
+        values: [userId]
+      }, 
+      function(err, results){
+        if (err) throw err;
+
+        done();
+
+        var res = {};
+        if(results.rows.length > 0){
+          res.id = results.rows[0].user_id
+          res.userName = results.rows[0].user_name;
+          res.people = new Array();
+          results.rows.forEach((element) => {
+            res.people.push({
+              "id": element.person_id, 
+              "name": element.person_name,
+              "grade": element.grade,
+              "minLevel": element.min_level,
+              "maxLevel": element.max_level
+            });
+          });
+        }
+        
+        process.nextTick(callback, res);
+      }
+    );
+  });
+};
+
+exports.getGames = (personId, callback) => {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    if (err) throw err;
+
+    client.query(
+      {
+        name: 'get games for person',
+        text: 'SELECT id, person_data, start_time, end_time FROM public.people_data WHERE person_id=$1;',
+        values: [personId]
+      }, 
+      function(err, results){
+        if (err) throw err;
+
+        done();
+
+        var games = new Array();
+        results.rows.forEach((element) => {
+          games.push({
+            "id": element.id,
+            "data": element.person_data,
+            "startTime": element.start_time,
+            "endTime": element.end_time
+          });
+        });
+        
+        process.nextTick(callback, games);
       }
     );
   });
@@ -39,7 +107,7 @@ exports.hasInProgressGame = (personId, callback) => {
 
         done();
 
-        callback(results.rows.length > 0);
+        process.nextTick(callback, results.rows.length > 0);
       }
     );
   });
@@ -62,7 +130,7 @@ exports.addGame = (personId, jsonData, callback) => {
 
         done();
 
-        callback(newUuid);
+        process.nextTick(callback, newUuid);
       }
     );
   });
@@ -84,7 +152,7 @@ exports.saveGame = (gameId, jsonData, callback) => {
         done();
         
         if(callback){
-          callback(results.rowCount);
+          process.nextTick(callback, results.rowCount);
         }
       }
     );
@@ -107,7 +175,7 @@ exports.endGame = (gameId, callback) => {
         done();
         
         if(callback){
-          callback(results.rowCount);
+          process.nextTick(callback, results.rowCount);
         }
       }
     );

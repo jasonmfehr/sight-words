@@ -20,8 +20,12 @@ router.get('/users',function(req,res){
 
 router.get('/users/:userId',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write("userid is: " + req.params.userId);
-  res.end();
+  db.getUserAndPeople(req.params.userId, (userDetails) => {res.write(JSON.stringify(userDetails)); res.end();})
+});
+
+router.get('/person/:personId/games',function(req,res){
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  db.getGames(req.params.personId, (gamesDetails) => {res.write(JSON.stringify(gamesDetails)); res.end();})
 });
 
 /*
