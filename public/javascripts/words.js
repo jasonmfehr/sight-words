@@ -15,7 +15,7 @@ var sw = sw || {};
     { 'word': 'see', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'go', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'to', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'I', 'skipTransform': false, 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
+    { 'word': 'I', 'doTransform': false, 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'and', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'my', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'like', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
@@ -98,22 +98,25 @@ var sw = sw || {};
     LCASE_ALL
   ]
   
+  var prev,curOrig;
+  
   //TODO this function is extremely dangerous as it blindly recurses assuming the state of the SIGHT_WORDS array is being properly managed
   //returns a random sight word that is NOT_SHOWN or TRY_AGAIN and is within the skill level of the user
   sw.getRandSightWord = function() {
     var wordObj, transformFunc;
+    
+    if(curOrig){
+      prev = curOrig;
+    }
     
     wordObj = sw.getRandItem(SIGHT_WORDS);
     
     if(wordObj.status === SUCCESS || wordObj.level > sw.user.level){
       return sw.getRandSightWord();
     }else{
-      if(wordObj.skipTransform === false){
-        return wordObj.word;
-      }else{
-        transformFunc = sw.getRandItem(TRANSFORM_FUNCS);
-        return transformFunc(wordObj.word);
-      }
+      curOrig = {"word": wordObj.word, "status": wordObj.status, "time": wordObj.time, "attempts": wordObj.attempts, "doTransform": wordObj.doTransform};
+      
+      return transformWord(wordObj);
     }
   }
   
@@ -176,6 +179,29 @@ var sw = sw || {};
     });
   }
   
+  //goes back to the previous word, cannot go back more than once
+  sw.goBack = function() {
+    if(prev){
+      var tmpPrev = prev;
+      SIGHT_WORDS
+        .filter(function(item){
+          return item.word.toLowerCase() === prev.word.toLowerCase();
+        })
+        .forEach(function(item){
+          item.status = prev.status;
+          item.time = prev.time;
+          item.attempts = prev.attempts;
+        });
+
+      curOrig = prev;
+      prev = null;
+      
+      return transformWord(tmpPrev);
+    }else{
+      throw new Error("no previous word available");
+    }
+  }
+  
   //converts a status number into a human readable string
   function descriptiveStatus(status) {
     if(status === NOT_SHOWN){
@@ -201,6 +227,16 @@ var sw = sw || {};
         break;
       }
     }
+  }
+  
+  //performs a random transform on a word unless doTransform on that word has been set to false
+  function transformWord(wordObj) {
+    if(wordObj.doTransform === false){
+        return wordObj.word;
+      }else{
+        transformFunc = sw.getRandItem(TRANSFORM_FUNCS);
+        return transformFunc(wordObj.word);
+      }
   }
   
 })(sw, jQuery);
