@@ -39,6 +39,12 @@ var sw = sw || {};
     enableButtonsWithDelay();
   });
   
+  $('#btnGoBack').click(function() {
+    disableButtons();
+    generate(sw.goBack());
+    enableButtonsWithDelay(false);
+  });
+  
   $('#startOver').click(function() {
     window.location.reload();
   });
@@ -52,7 +58,7 @@ var sw = sw || {};
   });
   
   
-  function generate() {
+  function generate(word) {
     var $sightWordContainer = $('#sightWord');
     
     if(updateProgressBar()){
@@ -63,7 +69,11 @@ var sw = sw || {};
       $sightWordContainer.removeClass(ALL_FONT_SIZE_CLASSES).addClass(FONT_SIZE_CLASS_PREFIX + sw.getRand(0, FONT_SIZE_COUNT - 1));
       $sightWordContainer.removeClass(ALL_FONT_COLOR_CLASSES).addClass(FONT_COLOR_CLASS_PREFIX + sw.getRand(0, FONT_COLOR_COUNT - 1));
       
-      $sightWordContainer.text(sw.getRandSightWord());
+      if(!word){
+        word = sw.getRandSightWord();
+        
+      }
+      $sightWordContainer.text(word);
     }
     
     sw.timer.start();
@@ -131,15 +141,19 @@ var sw = sw || {};
   function disableButtons() {
     $('#btnOk').attr('disabled', true);
     $('#btnTryAgain').attr('disabled', true);
+    $('#btnGoBack').attr('disabled', true);
   }
   
-  function enableButtons() {
+  function enableButtons(enableGoBack) {
     $('#btnOk').removeAttr('disabled');
     $('#btnTryAgain').removeAttr('disabled');
+    if(enableGoBack !== false){
+      $('#btnGoBack').removeAttr('disabled');
+    }
   }
   
-  function enableButtonsWithDelay() {
-    setTimeout(enableButtons, 250);
+  function enableButtonsWithDelay(enableGoBack) {
+    setTimeout(enableButtons, 250, enableGoBack);
   }
   
 })(sw, jQuery);
