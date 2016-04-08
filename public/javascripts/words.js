@@ -77,7 +77,17 @@ var sw = sw || {};
     { 'word': 'will', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
     { 'word': 'when', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
     { 'word': 'what', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'with', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0  }
+    { 'word': 'with', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0  },
+    { 'word': 'now', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'some', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'get', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'be', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'into', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'day', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'eat', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'his', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'so', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
+    { 'word': 'too', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  }
   ];
   
   const UCASE_FIRST = function(str) {
