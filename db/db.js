@@ -113,6 +113,33 @@ exports.hasInProgressGame = (personId, callback) => {
   });
 };
 
+exports.getInProgressGame = (personId, callback) => {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    if (err) throw err;
+
+    client.query(
+      {
+        name: 'get in progress',
+        text: 'SELECT id, person_id, person_data, start_time, end_time FROM people_data WHERE person_id=$1 AND end_time IS NULL ORDER BY start_time DESC LIMIT 1;',
+        values: [personId]
+      }, 
+      function(err, results){
+        var result = {};
+        
+        if (err) throw err;
+
+        done();
+        
+        if(results.rows.length === 1){
+          result = results.rows[0];
+        }
+        
+        process.nextTick(callback, result);
+      }
+    );
+  });
+};
+
 exports.addGame = (personId, jsonData, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;

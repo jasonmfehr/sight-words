@@ -37,7 +37,10 @@ db.hasInProgressGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', function(result) {
 /*
 db.addGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', '{"foo1":"bar1"}', function(newUuid) {
   console.log('the new uuid is: ' + newUuid);
-})
+  db.getInProgressGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', (game) => {
+    console.log("new game obj is: " + JSON.stringify(game));
+  });
+});
 */
 
 /*
