@@ -54,6 +54,7 @@ var sw = sw || {};
   });
   
   $(document).ready(function() {
+    //$('#loadingModal').modal();
     $('#pauseModal').modal();
   });
   

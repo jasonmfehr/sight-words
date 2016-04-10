@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/overrides.css">
     <link rel="stylesheet" href="stylesheets/fonts.css">
     <link rel="stylesheet" href="stylesheets/buttons.css">
+    <link rel="stylesheet" href="stylesheets/spinner.css">
   </head>
   <body>
     
@@ -69,6 +70,20 @@
           </div>
           <div class="modal-footer">
             <button id="pauseModalButton" type="button" class="btn btn-default" data-dismiss="modal">Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- loading modal -->
+    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-label="loading indicator" data-backdrop="static" data-keyboard="false" data-show="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5>Loading...</h4>
+          </div>
+          <div class="modal-body">
+            <div class="loader">Loading...</div>
           </div>
         </div>
       </div>
@@ -186,5 +201,6 @@
     <script src="javascripts/helpers.js"></script>
     <script src="javascripts/user.js"></script>
     <script src="javascripts/timer.js"></script>
+    <script src="javascripts/sw-ajax.js"></script>
   </body>
 </html>

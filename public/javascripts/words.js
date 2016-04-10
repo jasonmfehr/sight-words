@@ -8,7 +8,7 @@ var sw = sw || {};
   const TRY_AGAIN = 2;
   
   //TODO externalize this in a database or something
-  const SIGHT_WORDS = [
+  var SIGHT_WORDS = [
     { 'word': 'here', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'a', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'is', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
@@ -210,6 +210,22 @@ var sw = sw || {};
     }else{
       throw new Error("no previous word available");
     }
+  }
+  
+  //loads an existing game with the provided data
+  sw.load = function(personId) {
+    sw.ajax.get('person/' + personId + '/games?status=inProgress', function(data) {
+      if(data.length > 0){
+        SIGHT_WORDS = data;
+      }
+    });
+  }
+  
+  //saves the existing game
+  sw.add = function(personId, callback) {
+    sw.ajax.post('person/' + personId + '/games', SIGHT_WORDS, function(newGameId) {
+      console.log("new game id: " + newGameId.gameId);
+    })
   }
   
   //converts a status number into a human readable string

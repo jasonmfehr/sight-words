@@ -13,6 +13,7 @@ const db = require('../db/db.js');
 router.get('/users',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
   db.listUsers(function(users){
+    console.log("users:" + JSON.stringify(users));
     res.write(JSON.stringify(users));
     res.end();
   });
@@ -25,7 +26,31 @@ router.get('/users/:userId',function(req,res){
 
 router.get('/person/:personId/games',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  db.getGames(req.params.personId, (gamesDetails) => {res.write(JSON.stringify(gamesDetails)); res.end();})
+  if(req.query.status === 'inProgress'){
+    db.getInProgressGame(req.params.personId, (gamesDetails) => {res.write(JSON.stringify(gamesDetails)); res.end();})
+  }else{
+    db.getGames(req.params.personId, (gamesDetails) => {res.write(JSON.stringify(gamesDetails)); res.end();})
+  }
+});
+
+router.post('/person/:personId/games',function(req,res){
+  db.addGame(req.params.personId, req.body, (newGameId) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.write('{"gameId": "' + newGameId + '"}');
+    res.end();
+  });
+});
+
+router.put('/games/:gameId',function(req,res){
+  db.saveGame(req.params.gameId, req.body, (updatedRows) => {
+    if(updateRows === 0){
+      res.writeHead(500);
+    }else{
+      res.writeHead(204);
+    }
+    
+    res.end();
+  });
 });
 
 /*
