@@ -9,6 +9,7 @@ var sw = sw || {};
   
   //TODO externalize this in a database or something
   const SIGHT_WORDS = [
+    /*
     { 'word': 'here', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'a', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
     { 'word': 'is', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
@@ -68,6 +69,7 @@ var sw = sw || {};
     { 'word': 'at', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
     { 'word': 'then', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
     { 'word': 'out', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
+    */
     { 'word': 'all', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
     { 'word': 'there', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
     { 'word': 'went', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
@@ -78,6 +80,7 @@ var sw = sw || {};
     { 'word': 'when', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
     { 'word': 'what', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
     { 'word': 'with', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0  },
+    /*
     { 'word': 'now', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
     { 'word': 'some', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
     { 'word': 'get', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
@@ -88,6 +91,45 @@ var sw = sw || {};
     { 'word': 'his', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
     { 'word': 'so', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
     { 'word': 'too', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  }
+    */
+    { 'word': 'if', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'am', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'or', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'how', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'going', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'dad', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'their', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'home', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'got', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'put', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'no', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'water', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'just', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'time', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'your', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'which', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'did', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'very', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'has', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'good', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'dog', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'her', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'back', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'long', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'house', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'were', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'saw', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'as', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'by', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'them', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'over', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'came', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'from', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'an', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'tree', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'mom', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'had', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  },
+    { 'word': 'cat', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 7, 'time': 0  }
   ];
   
   const UCASE_FIRST = function(str) {
