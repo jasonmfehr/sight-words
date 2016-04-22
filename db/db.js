@@ -1,6 +1,7 @@
 const pg = require('pg');
 const uuid = require('uuid')
 
+//TODO remove this before heroku
 //pg.defaults.ssl = true;
 
 exports.listUsers = (callback) => {
