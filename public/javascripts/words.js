@@ -1,182 +1,99 @@
 var sw = sw || {};
 
 (function(sw, $) {
-  
+
   //word status
   const NOT_SHOWN = 0;
   const SUCCESS = 1;
   const TRY_AGAIN = 2;
-  
-  //TODO externalize this in a database or something
-  var SIGHT_WORDS = [
-    { 'word': 'here', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'a', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'is', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'see', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'go', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'to', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'I', 'doTransform': false, 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'and', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'my', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'like', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 0, 'time': 0 }, 
-    { 'word': 'pink', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'blue', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'green', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'white', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'purple', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'black', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'orange', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'yellow', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'red', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'brown', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 1, 'time': 0 }, 
-    { 'word': 'said', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'funny', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'have', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'are', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'she', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'the', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'for', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'play', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'he', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'it', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 2, 'time': 0 }, 
-    { 'word': 'away', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'big', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'can', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'run', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'come', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'me', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'down', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'help', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'in', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'find', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'one', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'not', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'you', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'we', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'up', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'three', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'two', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'make', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'jump', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 3, 'time': 0 }, 
-    { 'word': 'this', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'but', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'do', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'where', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'they', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'on', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'little', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'at', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'then', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'out', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 4, 'time': 0 }, 
-    { 'word': 'all', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'there', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'went', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'of', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'that', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'was', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'will', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'when', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'what', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0 }, 
-    { 'word': 'with', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 5, 'time': 0  },
-    { 'word': 'now', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'some', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'get', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'be', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'into', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'day', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'eat', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'his', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'so', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  },
-    { 'word': 'too', 'status': NOT_SHOWN, 'attempts': 0, 'grade': 'K', 'level': 6, 'time': 0  }
-  ];
-  
+
   const UCASE_FIRST = function(str) {
     return str.slice(0,1).toUpperCase() + str.slice(1).toLowerCase();
   }
-  
+
   const UCASE_ALL = function(str) {
     return str.toUpperCase();
   }
-  
+
   const LCASE_ALL = function(str) {
     return str.toLowerCase();
   }
-  
+
   const TRANSFORM_FUNCS = [
-    UCASE_FIRST, 
-    UCASE_ALL, 
+    UCASE_FIRST,
+    UCASE_ALL,
     LCASE_ALL
   ]
-  
-  var prev,curOrig;
-  
-  //TODO this function is extremely dangerous as it blindly recurses assuming the state of the SIGHT_WORDS array is being properly managed
+
+  var prev,curOrig,sightWords;
+
+  //TODO this function is extremely dangerous as it blindly recurses assuming the state of the sightWords array is being properly managed
   //returns a random sight word that is NOT_SHOWN or TRY_AGAIN and is within the skill level of the user
   sw.getRandSightWord = function() {
     var wordObj, transformFunc;
-    
+
     if(curOrig){
       prev = curOrig;
     }
-    
-    wordObj = sw.getRandItem(SIGHT_WORDS);
-    
+
+    wordObj = sw.getRandItem(sightWords);
+
     if(wordObj.status === SUCCESS || wordObj.level > sw.user.level){
       return sw.getRandSightWord();
     }else{
       curOrig = {"word": wordObj.word, "status": wordObj.status, "time": wordObj.time, "attempts": wordObj.attempts, "doTransform": wordObj.doTransform};
-      
+
       return transformWord(wordObj);
     }
   }
-  
+
   //counts the NOT_SHOWN and TRY_AGAIN words within the skill level of the user
   sw.countWordLeft = function() {
     var wordsLeft = 0;
-    
-    for(w of SIGHT_WORDS){
+
+    for(w of sightWords){
       if((w.status === NOT_SHOWN || w.status === TRY_AGAIN) && w.level <= sw.user.level){
         wordsLeft++;
       }
     }
-    
+
     return wordsLeft;
   }
-  
+
   //counts the number of words within the current user's skill level
   sw.countTotalWords = function() {
     var wordCount = 0;
-    
-    for(w of SIGHT_WORDS){
+
+    for(w of sightWords){
       if(w.level <= sw.user.level){
         wordCount++;
       }
     }
-    
+
     return wordCount;
-    
+
   }
-  
+
   //sets the status of a word to SUCCESS
   sw.wordSuccess = function(wordStr) {
     updateWord(wordStr, SUCCESS);
   }
-  
+
   //sets the status of a word to TRY_AGAIN
   sw.wordFail = function(wordStr) {
     updateWord(wordStr, TRY_AGAIN);
   }
-  
+
   //builds an object listing the status of each word and how many attempts it took to get there
   sw.statusReport = function() {
     var report = [];
-    
-    for(w of SIGHT_WORDS){
+
+    for(w of sightWords){
       if(w.level <= sw.user.level){
         report.push({ 'word': w.word.toUpperCase(), 'status': descriptiveStatus(w.status), 'attempts': w.attempts, 'level': w.level, 'time': w.time });
       }
     }
-    
+
     //TODO sort by level then alphabetically
     return report.sort(function(first,second) {
       if(first.level < second.level){
@@ -188,12 +105,12 @@ var sw = sw || {};
       }
     });
   }
-  
+
   //goes back to the previous word, cannot go back more than once
   sw.goBack = function() {
     if(prev){
       var tmpPrev = prev;
-      SIGHT_WORDS
+      sightWords
         .filter(function(item){
           return item.word.toLowerCase() === prev.word.toLowerCase();
         })
@@ -205,29 +122,42 @@ var sw = sw || {};
 
       curOrig = prev;
       prev = null;
-      
+
       return transformWord(tmpPrev);
     }else{
       throw new Error("no previous word available");
     }
   }
-  
+
+  //retrieves the sight words list from the server
+  //the function provided as a callback will be passed a boolean indicating success (true) or failure (false)
+  sw.newGame = function(callback) {
+      sw.ajax.get('words?grade=K&minLevel=4&maxLevel=6', function(data) {
+          if(data){
+              sightWords=data;
+              callback(true);
+          }else{
+              callback(false);
+          }
+      });
+  }
+
   //loads an existing game with the provided data
   sw.load = function(personId) {
     sw.ajax.get('person/' + personId + '/games?status=inProgress', function(data) {
       if(data.length > 0){
-        SIGHT_WORDS = data;
+        sightWords = data;
       }
     });
   }
-  
+
   //saves the existing game
   sw.add = function(personId, callback) {
-    sw.ajax.post('person/' + personId + '/games', SIGHT_WORDS, function(newGameId) {
+    sw.ajax.post('person/' + personId + '/games', sightWords, function(newGameId) {
       console.log("new game id: " + newGameId.gameId);
     })
   }
-  
+
   //converts a status number into a human readable string
   function descriptiveStatus(status) {
     if(status === NOT_SHOWN){
@@ -238,14 +168,14 @@ var sw = sw || {};
       return "success";
     }
   }
-  
+
   //does the actual work of updating the status and attempt count of a word
   function updateWord(wordStr, status) {
     var lcaseWordStr;
-    
+
     lcaseWordStr = wordStr.toLowerCase();
-    
-    for(w of SIGHT_WORDS){
+
+    for(w of sightWords){
       if(w.word.toLowerCase() === lcaseWordStr){
         w.status = status;
         w.attempts++;
@@ -254,7 +184,7 @@ var sw = sw || {};
       }
     }
   }
-  
+
   //performs a random transform on a word unless doTransform on that word has been set to false
   function transformWord(wordObj) {
     if(wordObj.doTransform === false){
@@ -264,5 +194,5 @@ var sw = sw || {};
         return transformFunc(wordObj.word);
       }
   }
-  
+
 })(sw, jQuery);

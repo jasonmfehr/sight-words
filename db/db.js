@@ -3,6 +3,28 @@ const uuid = require('uuid')
 
 //TODO remove this before heroku
 //pg.defaults.ssl = true;
+process.env.DATABASE_URL = 'postgres://postgres:postgres@localhost:5432/jasonmfehr';
+
+exports.getWords = (grade,minLevel,maxLevel,callback) => {
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+      if (err) throw err;
+
+      client.query(
+        {
+          name: 'get words',
+          text: 'SELECT id,word,do_transform FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
+          values: [grade, minLevel, maxLevel]
+        },
+        function(err, results){
+          if (err) throw err;
+
+          done();
+
+          process.nextTick(callback, results.rows);
+        }
+      );
+    });
+};
 
 exports.listUsers = (callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
@@ -12,7 +34,7 @@ exports.listUsers = (callback) => {
       {
         name: 'list users',
         text: 'SELECT id,user_name FROM users;'
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
@@ -33,7 +55,7 @@ exports.getUserAndPeople = (userId, callback) => {
         name: 'get user and people',
         text: 'SELECT u.id AS user_id, u.user_name, p.id AS person_id, p.person_name, p.grade, p.min_level, p.max_level FROM public.users u INNER JOIN public.people p ON u.id = p.user_id WHERE u.id=$1;',
         values: [userId]
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
@@ -46,7 +68,7 @@ exports.getUserAndPeople = (userId, callback) => {
           res.people = new Array();
           results.rows.forEach((element) => {
             res.people.push({
-              "id": element.person_id, 
+              "id": element.person_id,
               "name": element.person_name,
               "grade": element.grade,
               "minLevel": element.min_level,
@@ -54,7 +76,7 @@ exports.getUserAndPeople = (userId, callback) => {
             });
           });
         }
-        
+
         process.nextTick(callback, res);
       }
     );
@@ -70,7 +92,7 @@ exports.getGames = (personId, callback) => {
         name: 'get games for person',
         text: 'SELECT id, person_data, start_time, end_time FROM public.people_data WHERE person_id=$1;',
         values: [personId]
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
@@ -85,7 +107,7 @@ exports.getGames = (personId, callback) => {
             "endTime": element.end_time
           });
         });
-        
+
         process.nextTick(callback, games);
       }
     );
@@ -102,7 +124,7 @@ exports.hasInProgressGame = (personId, callback) => {
         name: 'check for in progress',
         text: 'SELECT id FROM people_data WHERE person_id=$1 AND end_time IS NULL;',
         values: [personId]
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
@@ -124,18 +146,18 @@ exports.getInProgressGame = (personId, callback) => {
         name: 'get in progress',
         text: 'SELECT id, person_data, start_time FROM people_data WHERE person_id=$1 AND end_time IS NULL ORDER BY start_time DESC LIMIT 1;',
         values: [personId]
-      }, 
+      },
       function(err, results){
         var result = {};
-        
+
         if (err) throw err;
 
         done();
-        
+
         if(results.rows.length === 1){
           result = results.rows[0];
         }
-        
+
         process.nextTick(callback, result);
       }
     );
@@ -147,13 +169,13 @@ exports.addGame = (personId, jsonData, callback) => {
     if (err) throw err;
 
     const newUuid = uuid.v4();
-    
+
     client.query(
       {
         name: 'add game',
         text: 'INSERT INTO people_data (id,person_id,person_data) VALUES ($1,$2,$3);',
         values: [newUuid, personId, jsonData]
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
@@ -174,12 +196,12 @@ exports.saveGame = (gameId, jsonData, callback) => {
         name: 'save game',
         text: 'UPDATE people_data SET person_data=$1 WHERE id=$2;',
         values: [jsonData, gameId]
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
         done();
-        
+
         if(callback){
           process.nextTick(callback, results.rowCount);
         }
@@ -197,12 +219,12 @@ exports.endGame = (gameId, callback) => {
         name: 'end game',
         text: 'UPDATE people_data SET end_time=now() WHERE id=$1;',
         values: [gameId]
-      }, 
+      },
       function(err, results){
         if (err) throw err;
 
         done();
-        
+
         if(callback){
           process.nextTick(callback, results.rowCount);
         }
@@ -210,4 +232,3 @@ exports.endGame = (gameId, callback) => {
     );
   });
 };
-

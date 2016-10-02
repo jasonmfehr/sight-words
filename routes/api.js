@@ -3,13 +3,23 @@ var router = express.Router();
 const db = require('../db/db.js');
 
 /*
-  /users                      (GET)
-  /users/{GUID}               (GET,POST,PUT,DELETE)
-  /users/{GUID}/data          (GET,POST,PUT,DELETE)
-  /users/{GUID}/data/{GUID}   (GET,POST,PUT,DELETE)
-
-
+  /words?grade=0&minLevel=1&maxLevel=2   (GET)
+  /users                                 (GET)
+  /users/{GUID}                          (GET,POST,PUT,DELETE)
+  /users/{GUID}/data                     (GET,POST,PUT,DELETE)
+  /users/{GUID}/data/{GUID}              (GET,POST,PUT,DELETE)
 */
+
+router.get('/words',function(req,res){
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  //TODO handle missing query string parameters
+  db.getWords(req.query.grade, req.query.minLevel, req.query.maxLevel, function(words){
+    console.log("words:" + JSON.stringify(words));
+    res.write(JSON.stringify(words));
+    res.end();
+  });
+});
+
 router.get('/users',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
   db.listUsers(function(users){
@@ -48,7 +58,7 @@ router.put('/games/:gameId',function(req,res){
     }else{
       res.writeHead(204);
     }
-    
+
     res.end();
   });
 });
