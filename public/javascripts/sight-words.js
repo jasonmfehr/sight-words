@@ -53,10 +53,28 @@ var sw = sw || {};
     sw.timer.pause();
   });
 
-  $(document).ready(function() {
-    //$('#loadingModal').modal();
-    $('#pauseModal').modal();
-  });
+    $(document).ready(function() {
+        const $loadModal = $('#loadingModal');
+        var loaded = false;
+
+        disableButtons();
+        setTimeout(function() {
+            if(loaded === false){
+                $loadModal.modal('show');
+            }
+        }, 250);
+
+
+        sw.newGame(function(success){
+            //TODO handle success === false
+            loaded = true;
+            if(success === true){
+                generate();
+                $loadModal.modal('hide');
+                enableButtonsWithDelay();
+            }
+        });
+    });
 
 
   function generate(word) {

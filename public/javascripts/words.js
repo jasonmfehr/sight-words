@@ -38,7 +38,7 @@ var sw = sw || {};
 
     wordObj = sw.getRandItem(sightWords);
 
-    if(wordObj.status === SUCCESS || wordObj.level > sw.user.level){
+    if(wordObj.status === SUCCESS){
       return sw.getRandSightWord();
     }else{
       curOrig = {"word": wordObj.word, "status": wordObj.status, "time": wordObj.time, "attempts": wordObj.attempts, "dotransform": wordObj.dotransform};
@@ -52,7 +52,7 @@ var sw = sw || {};
     var wordsLeft = 0;
 
     for(w of sightWords){
-      if((w.status === NOT_SHOWN || w.status === TRY_AGAIN) && w.level <= sw.user.level){
+      if((w.status === NOT_SHOWN || w.status === TRY_AGAIN)){
         wordsLeft++;
       }
     }
@@ -62,15 +62,7 @@ var sw = sw || {};
 
   //counts the number of words within the current user's skill level
   sw.countTotalWords = function() {
-    var wordCount = 0;
-
-    for(w of sightWords){
-      if(w.level <= sw.user.level){
-        wordCount++;
-      }
-    }
-
-    return wordCount;
+    return sightWords.length;
 
   }
 
@@ -89,9 +81,7 @@ var sw = sw || {};
     var report = [];
 
     for(w of sightWords){
-      if(w.level <= sw.user.level){
         report.push({ 'word': w.word.toUpperCase(), 'status': descriptiveStatus(w.status), 'attempts': w.attempts, 'level': w.level, 'time': w.time });
-      }
     }
 
     //TODO sort by level then alphabetically
@@ -132,7 +122,7 @@ var sw = sw || {};
   //retrieves the sight words list from the server
   //the function provided as a callback will be passed a boolean indicating success (true) or failure (false)
   sw.newGame = function(callback) {
-      sw.ajax.get('words?grade=K&minLevel=4&maxLevel=6', function(data) {
+      sw.ajax.get('words?grade=0&minLevel=0&maxLevel=6', function(data) {
           if(data){
               sightWords=data;
               sightWords.forEach(function(item){

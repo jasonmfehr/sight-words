@@ -17,11 +17,18 @@ dbConfig.database = dbUrlParms.pathname.split('/')[1];
 const pool = new pg.Pool(dbConfig);
 
 exports.getWords = (grade,minLevel,maxLevel,callback) => {
+    //introduce 3-ish second delay in api call
+    /*
+    for(i=0; i<1000000000; i++){
+        var tmp = 2 + 1;
+    }
+    */
+    
     pool.connect(function(err, client, done) {
       if (err) throw err;
 
       client.query(
-          'SELECT id,word,do_transform AS dotransform FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
+          'SELECT id,word,do_transform AS dotransform,difficulty AS "level" FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
           [grade, minLevel, maxLevel],
           function(err, results){
               done();
