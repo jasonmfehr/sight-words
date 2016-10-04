@@ -1,31 +1,39 @@
 const pg = require('pg');
 const uuid = require('uuid')
+const url = require('url');
 
-//TODO remove this before heroku
-//pg.defaults.ssl = true;
-process.env.DATABASE_URL = 'postgres://postgres:postgres@localhost:5432/jasonmfehr';
+const dbConfig = {"ssl": true};
+if(!process.env.DATABASE_URL){
+    process.env.DATABASE_URL = 'postgres://postgres:postgres@localhost:5432/jasonmfehr';
+    dbConfig.ssl = false;
+}
+const dbUrlParms = url.parse(process.env.DATABASE_URL);
+const dbAuth = dbUrlParms.auth.split(':');
+dbConfig.user = dbAuth[0];
+dbConfig.password =dbAuth[1];
+dbConfig.host = dbUrlParms.hostname;
+dbConfig.port = dbUrlParms.port;
+dbConfig.database = dbUrlParms.pathname.split('/')[1];
+const pool = new pg.Pool(dbConfig);
 
 exports.getWords = (grade,minLevel,maxLevel,callback) => {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    pool.connect(function(err, client, done) {
       if (err) throw err;
 
       client.query(
-        {
-          name: 'get words',
-          text: 'SELECT id,word,do_transform AS dotransform FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
-          values: [grade, minLevel, maxLevel]
-        },
-        function(err, results){
-          if (err) throw err;
+          'SELECT id,word,do_transform AS dotransform FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
+          [grade, minLevel, maxLevel],
+          function(err, results){
+              done();
 
-          done();
+              if (err) throw err;
 
-          process.nextTick(callback, results.rows);
-        }
-      );
+              process.nextTick(callback, results.rows);
+          });
     });
 };
 
+//TODO switch to using pg-pool
 exports.listUsers = (callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -46,6 +54,7 @@ exports.listUsers = (callback) => {
   });
 };
 
+//TODO switch to using pg-pool
 exports.getUserAndPeople = (userId, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -83,6 +92,7 @@ exports.getUserAndPeople = (userId, callback) => {
   });
 };
 
+//TODO switch to using pg-pool
 exports.getGames = (personId, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -115,6 +125,7 @@ exports.getGames = (personId, callback) => {
 };
 
 /*
+//TODO switch to using pg-pool
 exports.hasInProgressGame = (personId, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -137,6 +148,7 @@ exports.hasInProgressGame = (personId, callback) => {
 };
 */
 
+//TODO switch to using pg-pool
 exports.getInProgressGame = (personId, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -164,6 +176,7 @@ exports.getInProgressGame = (personId, callback) => {
   });
 };
 
+//TODO switch to using pg-pool
 exports.addGame = (personId, jsonData, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -187,6 +200,7 @@ exports.addGame = (personId, jsonData, callback) => {
   });
 };
 
+//TODO switch to using pg-pool
 exports.saveGame = (gameId, jsonData, callback) => {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
@@ -210,6 +224,7 @@ exports.saveGame = (gameId, jsonData, callback) => {
   });
 };
 
+//TODO switch to using pg-pool
 exports.endGame = (gameId, callback) => {
    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
