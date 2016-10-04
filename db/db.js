@@ -12,7 +12,7 @@ exports.getWords = (grade,minLevel,maxLevel,callback) => {
       client.query(
         {
           name: 'get words',
-          text: 'SELECT id,word,do_transform FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
+          text: 'SELECT id,word,do_transform AS dotransform FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
           values: [grade, minLevel, maxLevel]
         },
         function(err, results){

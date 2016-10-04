@@ -41,7 +41,7 @@ var sw = sw || {};
     if(wordObj.status === SUCCESS || wordObj.level > sw.user.level){
       return sw.getRandSightWord();
     }else{
-      curOrig = {"word": wordObj.word, "status": wordObj.status, "time": wordObj.time, "attempts": wordObj.attempts, "doTransform": wordObj.doTransform};
+      curOrig = {"word": wordObj.word, "status": wordObj.status, "time": wordObj.time, "attempts": wordObj.attempts, "dotransform": wordObj.dotransform};
 
       return transformWord(wordObj);
     }
@@ -135,6 +135,11 @@ var sw = sw || {};
       sw.ajax.get('words?grade=K&minLevel=4&maxLevel=6', function(data) {
           if(data){
               sightWords=data;
+              sightWords.forEach(function(item){
+                 item.status = NOT_SHOWN;
+                 item.attempts = 0;
+                 item.time = 0;
+              });
               callback(true);
           }else{
               callback(false);
@@ -185,9 +190,9 @@ var sw = sw || {};
     }
   }
 
-  //performs a random transform on a word unless doTransform on that word has been set to false
+  //performs a random transform on a word unless dotransform on that word has been set to false
   function transformWord(wordObj) {
-    if(wordObj.doTransform === false){
+    if(wordObj.dotransform === false){
         return wordObj.word;
       }else{
         transformFunc = sw.getRandItem(TRANSFORM_FUNCS);
