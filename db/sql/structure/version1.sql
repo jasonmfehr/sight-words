@@ -1,4 +1,4 @@
-CREATE TABLE public.users
+CREATE TABLE users
 (
    id uuid NOT NULL,
    user_name character varying(250) NOT NULL,
@@ -9,7 +9,7 @@ WITH (
 )
 ;
 
-CREATE TABLE public.people
+CREATE TABLE people
 (
    id uuid NOT NULL,
    user_id uuid NOT NULL,
@@ -25,7 +25,7 @@ WITH (
 )
 ;
 
-CREATE TABLE public.people_data
+CREATE TABLE people_data
 (
    id uuid NOT NULL,
    person_id uuid NOT NULL,
@@ -40,11 +40,11 @@ WITH (
 )
 ;
 
-CREATE TABLE public.words
+CREATE TABLE words
 (
   id uuid NOT NULL,
   word character varying(100) NOT NULL,
-  grade character varying(10) NOT NULL,
+  grade integer NOT NULL,
   difficulty integer NOT NULL,
   do_transform boolean NOT NULL DEFAULT false,
   CONSTRAINT words_pk PRIMARY KEY (id)

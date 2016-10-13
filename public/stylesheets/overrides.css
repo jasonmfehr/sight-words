@@ -23,3 +23,7 @@
 body {
   padding-top: 70px;
 }
+
+#slider12c .slider-selection {
+	background: lightblue;
+}

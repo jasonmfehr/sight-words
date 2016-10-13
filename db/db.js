@@ -23,19 +23,40 @@ exports.getWords = (grade,minLevel,maxLevel,callback) => {
         var tmp = 2 + 1;
     }
     */
-    
+
     pool.connect(function(err, client, done) {
       if (err) throw err;
 
-      client.query(
-          'SELECT id,word,do_transform AS dotransform,difficulty AS "level" FROM public.words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;',
-          [grade, minLevel, maxLevel],
+      client.query({
+          "text": "SELECT id,word,do_transform AS dotransform,difficulty AS level FROM words WHERE grade=$1 AND difficulty>=$2 AND difficulty<=$3;",
+          "values": [grade, minLevel, maxLevel],
+          "name": "getWords"},
           function(err, results){
               done();
 
               if (err) throw err;
 
               process.nextTick(callback, results.rows);
+          });
+    });
+};
+
+exports.getGradeLevels = (callback) => {
+    pool.connect(function(err, client, done) {
+      if (err) throw err;
+
+      client.query({
+          "text": "SELECT DISTINCT grade FROM words ORDER BY grade ASC;",
+          "name": "getGradeLevels"},
+          function(err, results){
+              done();
+
+              if (err) throw err;
+
+              process.nextTick(
+                  callback,
+                  results.rows.map(function(row){return row.grade;})
+              );
           });
     });
 };

@@ -14,12 +14,21 @@ router.get('/words',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
   //TODO handle missing query string parameters
   db.getWords(req.query.grade, req.query.minLevel, req.query.maxLevel, function(words){
-    console.log("words:" + JSON.stringify(words));
     res.write(JSON.stringify(words));
     res.end();
   });
 });
 
+router.get('/gradeLevels',function(req,res){
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  db.getGradeLevels(function(levels){
+    res.write(JSON.stringify(levels));
+    res.end();
+  });
+});
+
+
+//OLD FUNCTIONS
 router.get('/users',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
   db.listUsers(function(users){

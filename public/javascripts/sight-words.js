@@ -58,6 +58,9 @@ var sw = sw || {};
         var loaded = false;
 
         disableButtons();
+
+        $("#ex2").slider({ id: "slider12c", min: 0, max: 10, range: true, value: [3, 7] });
+
         setTimeout(function() {
             if(loaded === false){
                 $loadModal.modal('show');
