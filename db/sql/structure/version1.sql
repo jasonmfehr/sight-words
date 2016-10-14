@@ -1,46 +1,9 @@
-CREATE TABLE users
-(
-   id uuid NOT NULL,
-   user_name character varying(250) NOT NULL,
-   CONSTRAINT users_pk PRIMARY KEY (id)
-)
-WITH (
-  OIDS = FALSE
-)
-;
+DROP TABLE IF EXISTS games_words;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS words;
 
-CREATE TABLE people
-(
-   id uuid NOT NULL,
-   user_id uuid NOT NULL,
-   person_name character varying(250) NOT NULL,
-   grade integer NOT NULL,
-   min_level smallint NOT NULL DEFAULT 0,
-   max_level smallint NOT NULL DEFAULT 32767,
-   CONSTRAINT user_people_fk FOREIGN KEY (user_id) REFERENCES public.users (id) ON UPDATE CASCADE ON DELETE CASCADE,
-   CONSTRAINT people_pk PRIMARY KEY (id)
-)
-WITH (
-  OIDS = FALSE
-)
-;
-
-CREATE TABLE people_data
-(
-   id uuid NOT NULL,
-   person_id uuid NOT NULL,
-   person_data jsonb NOT NULL,
-   start_time timestamp with time zone NOT NULL DEFAULT now(),
-   end_time timestamp with time zone,
-   CONSTRAINT people_people_data_fk FOREIGN KEY (person_id) REFERENCES public.people (id) ON UPDATE CASCADE ON DELETE CASCADE,
-   CONSTRAINT people_data_pk PRIMARY KEY (id)
-)
-WITH (
-  OIDS = FALSE
-)
-;
-
-CREATE TABLE words
+CREATE TABLE IF NOT EXISTS words
 (
   id uuid NOT NULL,
   word character varying(100) NOT NULL,
@@ -52,3 +15,40 @@ CREATE TABLE words
 WITH (
   OIDS=FALSE
 );
+
+CREATE TABLE IF NOT EXISTS users
+(
+   id uuid NOT NULL,
+   user_name character varying(250) NOT NULL,
+   CONSTRAINT users_pk PRIMARY KEY (id)
+)
+WITH (
+  OIDS = FALSE
+)
+;
+
+CREATE TABLE IF NOT EXISTS games
+(
+   id uuid NOT NULL,
+   user_id uuid NOT NULL,
+   in_progress boolean NOT NULL DEFAULT true,
+   start_time timestamp with time zone NOT NULL DEFAULT now(),
+   end_time timestamp with time zone,
+   min_level smallint NOT NULL,
+   max_level smallint NOT NULL,
+   CONSTRAINT games_pk PRIMARY KEY (id),
+   CONSTRAINT user_games_fk FOREIGN KEY (user_id) REFERENCES public.users (id) ON UPDATE CASCADE ON DELETE CASCADE
+)
+;
+
+CREATE TABLE IF NOT EXISTS games_words
+(
+    game_id uuid NOT NULL,
+    word_id uuid NOT NULL,
+    status smallint NOT NULL,
+    attempts smallint NOT NULL,
+    elapsed_time smallint NOT NULL,
+    CONSTRAINT games_games_word_fk FOREIGN KEY (game_id) REFERENCES public.games (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT words_games_word_fk FOREIGN KEY (word_id) REFERENCES public.words (id) ON UPDATE CASCADE ON DELETE CASCADE
+)
+;
