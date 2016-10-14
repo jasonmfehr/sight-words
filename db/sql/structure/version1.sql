@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS words
   word character varying(100) NOT NULL,
   grade integer NOT NULL,
   difficulty integer NOT NULL,
-  do_transform boolean NOT NULL DEFAULT false,
+  do_transform boolean NOT NULL DEFAULT true,
   CONSTRAINT words_pk PRIMARY KEY (id)
 )
 WITH (

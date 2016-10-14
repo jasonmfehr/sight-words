@@ -4,7 +4,7 @@ INSERT INTO public.words(id,word,grade,difficulty) VALUES ('59b4e380-6d0e-444d-9
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('2d639762-cec2-4be0-aa5b-1abcc0a1e47f','see',0,0);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('28e81597-e380-4d3b-ba5c-d87c6a3e365b','go',0,0);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('8d392d42-e731-4994-b6e3-692eb2417466','to',0,0);
-INSERT INTO public.words(id,word,grade,difficulty,do_transform) VALUES ('d298e30a-78ed-48f0-a458-b676d73149d9','I',0,0,TRUE);
+INSERT INTO public.words(id,word,grade,difficulty,do_transform) VALUES ('d298e30a-78ed-48f0-a458-b676d73149d9','I',0,0,FALSE);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('14754a9e-1c72-4dd6-89ac-409afaa74766','and',0,0);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('ccaae5bf-b606-446c-a197-376f7ad239c0','my',0,0);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('e796c0f9-32ec-46e7-bed5-bb9fe982a4c6','like',0,0);
