@@ -7,22 +7,16 @@ var sw = sw || {};
   const SUCCESS = 1;
   const TRY_AGAIN = 2;
 
-  const UCASE_FIRST = function(str) {
-    return str.slice(0,1).toUpperCase() + str.slice(1).toLowerCase();
-  }
-
-  const UCASE_ALL = function(str) {
-    return str.toUpperCase();
-  }
-
-  const LCASE_ALL = function(str) {
-    return str.toLowerCase();
-  }
-
   const TRANSFORM_FUNCS = [
-    UCASE_FIRST,
-    UCASE_ALL,
-    LCASE_ALL
+      function(str) {
+        return str.slice(0,1).toUpperCase() + str.slice(1).toLowerCase();
+      },
+      function(str) {
+        return str.toUpperCase();
+      },
+      function(str) {
+        return str.toLowerCase();
+      }
   ]
 
   var prev,curOrig,sightWords;
