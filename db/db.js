@@ -16,6 +16,58 @@ dbConfig.port = dbUrlParms.port;
 dbConfig.database = dbUrlParms.pathname.split('/')[1];
 const pool = new pg.Pool(dbConfig);
 
+
+exports.listUsers = (callback) => {
+    pool.connect(function(err, client, done) {
+      if (err) throw err;
+
+      client.query({
+          "text": "SELECT id,user_name FROM users WHERE active=true",
+          "name": "listUsers"},
+          function(err, results){
+              done();
+
+              if (err) throw err;
+
+              process.nextTick(callback, results.rows);
+          });
+    });
+}
+
+exports.listGames = (userId, inProgressOnly, limit, callback) => {
+    _listGames({
+        "text": "SELECT id,in_progress,start_time,end_time,min_level,max_level FROM games WHERE user_id=$1 AND in_progress=$2 LIMIT " + limit,
+        "name": "listGames",
+        "values": [userId,inProgressOnly]},
+        callback);
+}
+
+exports.listGames = (userId, limit, callback) => {
+    _listGames({
+        "text": "SELECT id,in_progress,start_time,end_time,min_level,max_level FROM games WHERE user_id=$1 LIMIT " + limit,
+        "name": "listGames",
+        "values": [userId]},
+        callback);
+}
+
+function _listGames(cfg, callback) {
+    pool.connect(function(err, client, done) {
+      if (err) throw err;
+
+      client.query(cfg,
+          function(err, results){
+              done();
+
+              if (err) throw err;
+
+              process.nextTick(callback, results.rows);
+          });
+    });
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// OLD FUNCTIONS                                                             //
+///////////////////////////////////////////////////////////////////////////////
 exports.getWords = (grade,minLevel,maxLevel,callback) => {
     //introduce 3-ish second delay in api call
     /*

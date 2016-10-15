@@ -3,13 +3,55 @@ var router = express.Router();
 const db = require('../db/db.js');
 
 /*
-  /words?grade=0&minLevel=1&maxLevel=2   (GET)
-  /users                                 (GET)
-  /users/{GUID}                          (GET,POST,PUT,DELETE)
-  /users/{GUID}/data                     (GET,POST,PUT,DELETE)
-  /users/{GUID}/data/{GUID}              (GET,POST,PUT,DELETE)
+    /users                                      (GET) - list all user names
+    /users/{GUID}/games?inprogress=true&limit=1 (GET) - list games for a user
+    /users/{GUID}/games                         (POST) - create new game
+        - min level
+        - max level
+    /users/{GUID}/games/{GUID}                  (GET) - retrieve in progress games json
+    /users/{GUID}/games/{GUID}/words/{GUID}     (PUT) - update a single word in the game
+        - status
+        - attempts
+        - elapsed_time
 */
 
+router.get('/users', function(req,res){
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    db.listUsers(function(users){
+        res.write(JSON.stringify(users));
+        res.end();
+    });
+});
+
+router.get('/users/:userId/games', function(req,res){
+    var lmt;
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+
+    if(req.query.limit && !isNaN(req.query.limit)){
+        lmt = parseInt(req.query.limit);
+    }else{
+        lmt = 'ALL';
+    }
+
+    if(req.query.inprogress){
+        db.listGames(req.params.userId, (req.query.inprogress !== 'false'), lmt, function(games){
+            res.write(JSON.stringify(games));
+            res.end();
+        });
+    }else{
+        db.listGames(req.params.userId, lmt, function(games){
+            res.write(JSON.stringify(games));
+            res.end();
+        });
+    }
+
+});
+
+///////////////////////////////////////////////////////////////////////////////
+// OLD FUNCTIONS                                                             //
+///////////////////////////////////////////////////////////////////////////////
+/*
 router.get('/words',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
   //TODO handle missing query string parameters
@@ -27,8 +69,6 @@ router.get('/gradeLevels',function(req,res){
   });
 });
 
-
-//OLD FUNCTIONS
 router.get('/users',function(req,res){
   res.writeHead(200, { 'Content-Type': 'application/json' });
   db.listUsers(function(users){
@@ -71,6 +111,7 @@ router.put('/games/:gameId',function(req,res){
     res.end();
   });
 });
+*/
 
 /*
 db.hasInProgressGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', function(result) {

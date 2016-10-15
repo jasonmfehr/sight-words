@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS users
 (
    id uuid NOT NULL,
    user_name character varying(250) NOT NULL,
-   CONSTRAINT users_pk PRIMARY KEY (id)
+   active boolean NOT NULL DEFAULT true,
+   CONSTRAINT users_pk PRIMARY KEY (id),
+   CONSTRAINT user_name_uniq UNIQUE (user_name)
 )
 WITH (
   OIDS = FALSE
