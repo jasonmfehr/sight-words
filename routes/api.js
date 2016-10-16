@@ -5,14 +5,19 @@ const db = require('../db/db.js');
 /*
     /users                                      (GET) - list all user names
     /users/{GUID}/games?inprogress=true&limit=1 (GET) - list games for a user
-    /users/{GUID}/games                         (POST) - create new game
+    /users/{GUID}/games                         (POST) - create new game, returns games json
         - min level
         - max level
-    /users/{GUID}/games/{GUID}                  (GET) - retrieve in progress games json
+    /users/{GUID}/games/{GUID}/words            (GET) - retrieve games json
     /users/{GUID}/games/{GUID}/words/{GUID}     (PUT) - update a single word in the game
         - status
         - attempts
         - elapsed_time
+
+
+    sample curl commands:
+        - curl -i 'http://localhost:3000/api/users/0e13fd5e-613d-4401-8c63-c4e221650537/games?inprogress=true'
+        - curl -i -X POST -d '{"minLevel":0,"maxLevel":5}' -H "Content-Type: application/json" 'http://localhost:3000/api/users/0e13fd5e-613d-4401-8c63-c4e221650537/games'
 */
 
 router.get('/users', function(req,res){
@@ -35,7 +40,7 @@ router.get('/users/:userId/games', function(req,res){
     }
 
     if(req.query.inprogress){
-        db.listGames(req.params.userId, (req.query.inprogress !== 'false'), lmt, function(games){
+        db.listGamesSpecifyInProgress(req.params.userId, (req.query.inprogress !== 'false'), lmt, function(games){
             res.write(JSON.stringify(games));
             res.end();
         });
@@ -48,96 +53,29 @@ router.get('/users/:userId/games', function(req,res){
 
 });
 
-///////////////////////////////////////////////////////////////////////////////
-// OLD FUNCTIONS                                                             //
-///////////////////////////////////////////////////////////////////////////////
-/*
-router.get('/words',function(req,res){
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  //TODO handle missing query string parameters
-  db.getWords(req.query.grade, req.query.minLevel, req.query.maxLevel, function(words){
-    res.write(JSON.stringify(words));
-    res.end();
-  });
-});
+router.post('/users/:userId/games', function(req,res){
+    var minLevel = parseInt(req.body.minLevel),
+        maxLevel = parseInt(req.body.maxLevel);
 
-router.get('/gradeLevels',function(req,res){
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  db.getGradeLevels(function(levels){
-    res.write(JSON.stringify(levels));
-    res.end();
-  });
-});
-
-router.get('/users',function(req,res){
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  db.listUsers(function(users){
-    console.log("users:" + JSON.stringify(users));
-    res.write(JSON.stringify(users));
-    res.end();
-  });
-});
-
-router.get('/users/:userId',function(req,res){
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  db.getUserAndPeople(req.params.userId, (userDetails) => {res.write(JSON.stringify(userDetails)); res.end();})
-});
-
-router.get('/person/:personId/games',function(req,res){
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  if(req.query.status === 'inProgress'){
-    db.getInProgressGame(req.params.personId, (gamesDetails) => {res.write(JSON.stringify(gamesDetails)); res.end();})
-  }else{
-    db.getGames(req.params.personId, (gamesDetails) => {res.write(JSON.stringify(gamesDetails)); res.end();})
-  }
-});
-
-router.post('/person/:personId/games',function(req,res){
-  db.addGame(req.params.personId, req.body, (newGameId) => {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.write('{"gameId": "' + newGameId + '"}');
-    res.end();
-  });
-});
-
-router.put('/games/:gameId',function(req,res){
-  db.saveGame(req.params.gameId, req.body, (updatedRows) => {
-    if(updateRows === 0){
-      res.writeHead(500);
+    if(isNaN(minLevel) || isNaN(maxLevel)){
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify({"message": "both minLevel and maxLevel must be provided and must be integers"}));
+        res.end();
     }else{
-      res.writeHead(204);
+        db.addGame(req.params.userId, minLevel, maxLevel, function(newGameId){
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.write(JSON.stringify({"newGameId": newGameId}));
+            res.end();
+        });
     }
-
-    res.end();
-  });
 });
-*/
 
-/*
-db.hasInProgressGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', function(result) {
-  console.log('user has in progress: ' + result);
+router.get('/users/:userId/games/:gameId/words', function(req,res){
+    db.getGame(req.params.gameId, function(data) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify(data));
+        res.end();
+    });
 });
-*/
-
-/*
-db.addGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', '{"foo1":"bar1"}', function(newUuid) {
-  console.log('the new uuid is: ' + newUuid);
-  db.getInProgressGame('4e417958-e32a-4a34-9693-a22fd73d0cdc', (game) => {
-    console.log("new game obj is: " + JSON.stringify(game));
-  });
-});
-*/
-
-/*
-db.endGame('d42338d5-7421-45ea-8f84-9c694f4665b3', function(affectedRow) {
-  console.log('ended games count: ' + affectedRow);
-});
-*/
-
-/*
-db.listUsers(function(users) {
-  console.log('users: ' + JSON.stringify(users));
-});
-*/
 
 module.exports = router;

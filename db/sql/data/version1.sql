@@ -77,3 +77,16 @@ INSERT INTO public.words(id,word,grade,difficulty) VALUES ('a087e91b-4bdf-4df0-9
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('852189c4-226e-4780-b319-e730921295c0','his',0,6);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('34145a18-5fc8-4675-a5a3-454af478fc25','so',0,6);
 INSERT INTO public.words(id,word,grade,difficulty) VALUES ('2b675bdb-84bd-4c73-9a1e-83eb2cf876c7','too',0,6);
+
+
+
+
+
+
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('49330309-8af3-4c76-adea-79ab96ba6fe1','pat',1,7);
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('1c40fe85-8cfb-471d-abc8-0c698c6369d1','cat',1,7);
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('20f3fc8f-846f-47b9-88bd-f14d3d593596','bat',1,7);
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('3a5105e6-a78e-406f-930f-bbda49468eb5','red',1,8);
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('7fbccba2-07d2-4933-b00c-d847e85d5266','ned',1,8);
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('1265cf33-e109-41df-9fc6-5df66e6ad0b6','ted',1,8);
+INSERT INTO public.words(id,word,grade,difficulty) VALUES ('2657bcaa-3156-4d2f-bb88-2b26abe96634','ed',1,8);

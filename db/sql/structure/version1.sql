@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS games_words
 (
     game_id uuid NOT NULL,
     word_id uuid NOT NULL,
-    status smallint NOT NULL,
+    status character varying(250) NOT NULL,
     attempts smallint NOT NULL,
     elapsed_time smallint NOT NULL,
     CONSTRAINT games_games_word_fk FOREIGN KEY (game_id) REFERENCES public.games (id) ON UPDATE CASCADE ON DELETE CASCADE,
