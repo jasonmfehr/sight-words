@@ -140,3 +140,21 @@ function _getGameWords(gameId, data, callback) {
         });
     });
 };
+
+exports.updateGameWord = (gameId, wordId, status, attempts, elapsed_time, callback) => {
+    pool.connect(function(err, client, done) {
+        if (err) throw err;
+
+        client.query({
+            "text": "UPDATE games_words SET status=$3, attempts=$4, elapsed_time=$5 WHERE game_id=$1 and word_id=$2;",
+            "name": "updateGameWords",
+            "values": [gameId, wordId, status, attempts, elapsed_time]},
+            function(err, results){
+                done();
+
+                if (err) throw err;
+
+                process.nextTick(callback, true);
+        });
+    });
+};

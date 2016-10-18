@@ -8,8 +8,8 @@ const db = require('../db/db.js');
     /users/{GUID}/games                         (POST) - create new game, returns games json
         - min level
         - max level
-    /users/{GUID}/games/{GUID}/words            (GET) - retrieve games json
-    /users/{GUID}/games/{GUID}/words/{GUID}     (PUT) - update a single word in the game
+    /games/{GUID}/words            (GET) - retrieve games json
+    /games/{GUID}/words/{GUID}     (PUT) - update a single word in the game
         - status
         - attempts
         - elapsed_time
@@ -70,12 +70,42 @@ router.post('/users/:userId/games', function(req,res){
     }
 });
 
-router.get('/users/:userId/games/:gameId/words', function(req,res){
+router.get('/games/:gameId/words', function(req,res){
     db.getGame(req.params.gameId, function(data) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.write(JSON.stringify(data));
         res.end();
     });
+});
+
+router.put('/games/:gameId/words/:wordId', function(req,res){
+    var status = req.body.status,
+        attempts = parseInt(req.body.attempts),
+        elapsed_time = parseInt(req.body.elapsed_time);
+
+    if(!status){
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify({"message": "status body parameter is required"}));
+        res.end();
+    }else if(isNaN(attempts)){
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify({"message": "attempts body parameter must be an integer"}));
+        res.end();
+    }else if(isNaN(elapsed_time)){
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify({"message": "elapsed_time body parameter must be an integer"}));
+        res.end();
+    }else{
+        db.updateGameWord(req.params.gameId, req.params.wordId, status, attempts, elapsed_time, function(success){
+            if(success){
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+            }else{
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+            }
+
+            res.end();
+        });
+    }
 });
 
 module.exports = router;
