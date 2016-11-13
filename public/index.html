@@ -80,7 +80,7 @@
     </div>
 
     <!-- loading modal -->
-    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-label="loading indicator" data-backdrop="static" data-keyboard="false" data-show="true">
+    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-label="loading indicator" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -88,6 +88,21 @@
           </div>
           <div class="modal-body">
             <div class="loader">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- user select modal -->
+    <div id="userSelectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="userSelectModalLabel" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p id="userSelectModalLabel">Select the person who is going to brush up on their sight words:</p>
+            <select id="userSelect"></select>
+          </div>
+          <div class="modal-footer">
+            <button id="userSelectModalButton" type="button" class="btn btn-default" data-dismiss="modal" disabled>Select</button>
           </div>
         </div>
       </div>
@@ -207,5 +222,9 @@
     <script src="javascripts/user.js"></script>
     <script src="javascripts/timer.js"></script>
     <script src="javascripts/sw-ajax.js"></script>
+
+    <script src="javascripts/new/state-management.js"></script>
+    <script src="javascripts/new/user-select.js"></script>
+    <script src="javascripts/new/initializing.js"></script>
   </body>
 </html>

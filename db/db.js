@@ -16,21 +16,76 @@ dbConfig.port = dbUrlParms.port;
 dbConfig.database = dbUrlParms.pathname.split('/')[1];
 const pool = new pg.Pool(dbConfig);
 
+//TODO switch all functions to use this function for calling the database
+function _executeQuery(callback, name, query, values){
+    pool.connect(function(err, client, done) {
+        if(err){
+            console.error("[ERROR] - could not connect to database");
+            throw err;
+        }
+
+        client.query({
+            "text": query,
+            "name": name,
+            "values": values},
+            function(err, results){
+                done();
+
+                if(err){
+                  console.error("[ERROR] - could not execute query with name '" + name + "'");
+                  throw err;
+                }
+
+                process.nextTick(callback, results.rows);
+            }
+        );
+    });
+};
+
+function _listUsers(callback){
+    pool.connect(function(err, client, done) {
+        if(err){
+          console.error("[ERROR] - could not connect to database");
+          throw err;
+        }
+
+        client.query({
+            "text": "SELECT id,user_name FROM users WHERE active=true",
+            "name": "listUsers"},
+            function(err, results){
+                done();
+
+                if (err) throw err;
+
+                process.nextTick(callback, results.rows);
+        });
+    });
+}
 
 exports.listUsers = (callback) => {
-    pool.connect(function(err, client, done) {
-      if (err) throw err;
+    _listUsers(callback);
+};
 
-      client.query({
-          "text": "SELECT id,user_name FROM users WHERE active=true",
-          "name": "listUsers"},
-          function(err, results){
-              done();
+//TODO probably will not be needed
+exports.listUsersAndInProgressGames = (callback) => {
+    _listUsers(function(users){
+        //default hasInProgressGame to false
+        users.forEach(function(user){
+            user.hasInProgressGame = false;
+        });
 
-              if (err) throw err;
+        //loop through each game setting the corresponding user to hasInProgressGame=true
+        _executeQuery(function(games){
+            games.forEach(function(game){
+                users.forEach(function(user){
+                    if(user.id === game.id){
+                        user.hasInProgressGame = true;
+                    }
+                });
+            });
 
-              process.nextTick(callback, results.rows);
-          });
+            process.nextTick(callback, users);
+        }, "listUsersAndInProgressGames", "SELECT DISTINCT u.id FROM users u INNER JOIN games g ON u.id = g.user_id WHERE u.active=true AND g.in_progress = true");
     });
 };
 

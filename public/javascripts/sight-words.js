@@ -54,6 +54,8 @@ var sw = sw || {};
   });
 
     $(document).ready(function() {
+        sw.stateManager.userSelect($('body'));
+        /*
         const $loadModal = $('#loadingModal');
         var loaded = false;
 
@@ -77,6 +79,7 @@ var sw = sw || {};
                 enableButtonsWithDelay();
             }
         });
+        */
     });
 
 

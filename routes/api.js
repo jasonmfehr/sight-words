@@ -4,6 +4,7 @@ const db = require('../db/db.js');
 
 /*
     /users                                      (GET) - list all user names
+    /users?includeInProgress=true               (GET) - list all user names and whether or not they have in progress games
     /users/{GUID}/games?inprogress=true&limit=1 (GET) - list games for a user
     /users/{GUID}/games                         (POST) - create new game, returns games json
         - min level
@@ -22,10 +23,19 @@ const db = require('../db/db.js');
 
 router.get('/users', function(req,res){
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    db.listUsers(function(users){
-        res.write(JSON.stringify(users));
-        res.end();
-    });
+
+    if(req.query.includeInProgress === 'true'){
+        //TODO probably will not be needed
+        db.listUsersAndInProgressGames(function(users){
+            res.write(JSON.stringify(users));
+            res.end();
+        });
+    }else{
+        db.listUsers(function(users){
+            res.write(JSON.stringify(users));
+            res.end();
+        });
+    }
 });
 
 router.get('/users/:userId/games', function(req,res){
