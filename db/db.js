@@ -153,12 +153,17 @@ function _addGameWords(gameId, minLevel, maxLevel, callback) {
 
                 if (err) throw err;
 
-                process.nextTick(callback, gameId);
+                process.nextTick(_getGame, gameId, callback);
         });
     });
 };
 
+
 exports.getGame = (gameId, callback) => {
+    _getGame(gameId, callback);
+};
+
+function _getGame(gameId, callback) {
     pool.connect(function(err, client, done) {
     if (err) throw err;
 
@@ -174,6 +179,30 @@ exports.getGame = (gameId, callback) => {
             //TODO handle empty results
             process.nextTick(_getGameWords, gameId, results.rows[0], callback);
         });
+    });
+};
+
+exports.getGameLevels = (callback) => {
+    pool.connect(function(err, client, done) {
+        if(err){
+            console.error("[ERROR] - could not connect to database");
+            throw err;
+        }
+
+        client.query({
+            "text": "SELECT min(difficulty) as min, max(difficulty) as max FROM words",
+            "name": "getGameLevels"},
+            function(err, results){
+                done();
+
+                if(err){
+                  console.error("[ERROR] - could not execute query with name '" + name + "'");
+                  throw err;
+                }
+
+                process.nextTick(callback, results.rows[0]);
+            }
+        );
     });
 };
 

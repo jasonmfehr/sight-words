@@ -7,7 +7,7 @@ var sw = sw || {};
         $loadModal.modal('show');
 
         sw.ajax.get('/games/' + event.gameId + '/words', function(data){
-            
+            //TODO populate the word storage and get the game moving
             $loadModal.modal('hide');
         });
     });

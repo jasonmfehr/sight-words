@@ -14,7 +14,7 @@ sw.ajax = sw.ajax || {};
   ajax.post = function(url, data, callback) {
     $.ajax('/api/' + url, {
       "contentType": "application/json; charset=UTF-8",
-      "data": JSON.stringify({"data": data}),
+      "data": JSON.stringify(data),
       "dataType": "json",
       "method": "POST",
       "error": handleError,

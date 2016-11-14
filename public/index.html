@@ -13,10 +13,6 @@
     <link rel="stylesheet" href="stylesheets/spinner.css">
   </head>
   <body>
-      <!-- sample slider code
-      <input id="ex2" type="text" />
-      -->
-
     <!-- reload confirmation modal -->
     <div id="reloadConfirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reloadConfirmModalBody">
       <div class="modal-dialog modal-sm">
@@ -108,7 +104,7 @@
       </div>
     </div>
 
-    <!-- continue saved game prompt -->
+    <!-- continue saved game modal -->
     <div id="continueGameModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="continueGameModalLabel" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -123,6 +119,22 @@
       </div>
     </div>
 
+    <!-- configure new game modal -->
+    <div id="newGameModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newGameModalLabel" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p id="newGameModalLabel">Select the minimum and maximum levels for the words in the new game.</p>
+            <p>Min: <span id="spnMinLevel"></span></p>
+            <p>Max: <span id="spnMaxLevel"></span></p>
+            <input id="sliderGameLevel" type="text" />
+          </div>
+          <div class="modal-footer">
+            <button id="btnConfigureNewGame" type="button" class="btn btn-default" data-dismiss="modal">Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -236,11 +248,12 @@
     <script src="javascripts/helpers.js"></script>
     <script src="javascripts/user.js"></script>
     <script src="javascripts/timer.js"></script>
-    <script src="javascripts/sw-ajax.js"></script>
 
+    <script src="javascripts/new/sw-ajax.js"></script>
     <script src="javascripts/new/state-management.js"></script>
     <script src="javascripts/new/user-select.js"></script>
     <script src="javascripts/new/initializing.js"></script>
     <script src="javascripts/new/continue-game.js"></script>
+    <script src="javascripts/new/new-game.js"></script>
   </body>
 </html>

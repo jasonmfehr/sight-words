@@ -9,6 +9,7 @@ const db = require('../db/db.js');
     /users/{GUID}/games                         (POST) - create new game, returns games json
         - min level
         - max level
+    /games/levels                               (GET) - returns the min and max available level for words
     /games/{GUID}/words            (GET) - retrieve games json
     /games/{GUID}/words/{GUID}     (PUT) - update a single word in the game
         - status
@@ -72,12 +73,20 @@ router.post('/users/:userId/games', function(req,res){
         res.write(JSON.stringify({"message": "both minLevel and maxLevel must be provided and must be integers"}));
         res.end();
     }else{
-        db.addGame(req.params.userId, minLevel, maxLevel, function(newGameId){
+        db.addGame(req.params.userId, minLevel, maxLevel, function(newGameWords){
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify({"newGameId": newGameId}));
+            res.write(JSON.stringify(newGameWords));
             res.end();
         });
     }
+});
+
+router.get('/games/levels', function(req,res){
+    db.getGameLevels(function(data) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify(data));
+        res.end();
+    });
 });
 
 router.get('/games/:gameId/words', function(req,res){
