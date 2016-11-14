@@ -1,7 +1,7 @@
 var sw = sw || {};
 
 (function($){
-    $('body').on('state-user_select', function(event){
+    $(document).on('state-user_select', function(event){
         const $loadModal = $('#loadingModal');
         $loadModal.modal('show');
 
@@ -24,7 +24,8 @@ var sw = sw || {};
     });
 
     $('#userSelectModalButton').click(function(event){
-        sw.stateManager.initializing($('body'), $('#userSelect').val());
+        $('#userSelectModal').modal('hide');
+        sw.stateManager.initializing($('#userSelect').val());
     });
 
     $('#userSelect').change(function(event){

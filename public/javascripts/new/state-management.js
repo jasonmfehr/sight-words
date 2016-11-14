@@ -11,7 +11,9 @@ sw.stateManager = sw.stateManager || {};
         'GAME_RUNNING',
         'GAME_PAUSED',
         'GAME_EXIT',
-        'GAME_COMPLETE'];
+        'GAME_COMPLETE'],
+        $document = $(document);
+
 
     var currentState;
 
@@ -20,23 +22,23 @@ sw.stateManager = sw.stateManager || {};
     }
 
     stateMgr.userSelect = function($target) {
-        currentState = 'user_select';
-        $target.trigger($.Event('state-user_select'));
+        _triggerEvent('user_select', $target);
     };
 
-    stateMgr.initializing = function($target, userId) {
-        currentState = 'initializing';
-        $target.trigger($.Event('state-initializing', {"userId": userId}));
+    stateMgr.initializing = function(userId, $target) {
+        _triggerEventWithData('initializing', {"userId": userId}, $target);
     };
 
-    stateMgr.stateNewGame = function($target) {
-        currentState = 'start_new_game';
-        $target.trigger($.Event('state-start_new_game'));
+    stateMgr.configureNewGame = function(userId, $target) {
+        _triggerEventWithData('configure_new_game', {"userId": userId}, $target);
     };
 
-    stateMgr.continueSavedGame = function($target) {
-        currentState = 'continue_saved_game';
-        $target.trigger($.Event('state-continue_saved_game'));
+    stateMgr.startNewGame = function(userId, $target) {
+        _triggerEventWithData('start_new_game', {"userId": userId}, $target);
+    };
+
+    stateMgr.continueSavedGame = function(userId, gameId, $target) {
+        _triggerEventWithData('continue_saved_game', {"userId": userId, "gameId": gameId}, $target);
     };
 
     stateMgr.gameRunning = function($target) {
@@ -58,5 +60,25 @@ sw.stateManager = sw.stateManager || {};
         currentState = 'game_complete';
         $target.trigger($.Event('state-game_complete'));
     };
+
+    function _triggerEvent(eventName, $target) {
+        currentState = eventName;
+
+        if(typeof($target) === 'undefined'){
+            $document.trigger($.Event('state-' + eventName));
+        }else{
+            $target.trigger($.Event('state-' + eventName));
+        }
+    }
+
+    function _triggerEventWithData(eventName, data, $target) {
+        currentState = eventName;
+
+        if(typeof($target) === 'undefined'){
+            $document.trigger($.Event('state-' + eventName, data));
+        }else{
+            $target.trigger($.Event('state-' + eventName), data);
+        }
+    }
 
 })(sw.stateManager, jQuery);

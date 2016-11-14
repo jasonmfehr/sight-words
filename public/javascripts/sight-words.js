@@ -54,7 +54,7 @@ var sw = sw || {};
   });
 
     $(document).ready(function() {
-        sw.stateManager.userSelect($('body'));
+        sw.stateManager.userSelect();
         /*
         const $loadModal = $('#loadingModal');
         var loaded = false;
