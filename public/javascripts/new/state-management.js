@@ -6,7 +6,7 @@ sw.stateManager = sw.stateManager || {};
     const $document = $(document);
 
 
-    //TODO switch to managig userId/gameId here
+    //TODO switch to managing userId/gameId here
     var currentState,
         userId,
         gameId;
@@ -20,19 +20,20 @@ sw.stateManager = sw.stateManager || {};
     };
 
     stateMgr.initializing = function(userId, $target) {
-        _triggerEventWithData('initializing', {"userId": userId}, $target);
+        stateMgr.userId = userId;
+        _triggerEvent('initializing', $target);
     };
 
-    stateMgr.configureNewGame = function(userId, $target) {
-        _triggerEventWithData('configure_new_game', {"userId": userId}, $target);
+    stateMgr.configureNewGame = function($target) {
+        _triggerEvent('configure_new_game', $target);
     };
 
-    stateMgr.startNewGame = function(userId, minLevel, maxLevel, $target) {
-        _triggerEventWithData('start_new_game', {"userId": userId, "minLevel": minLevel, "maxLevel": maxLevel}, $target);
+    stateMgr.startNewGame = function(minLevel, maxLevel, $target) {
+        _triggerEventWithData('start_new_game', {"minLevel": minLevel, "maxLevel": maxLevel}, $target);
     };
 
-    stateMgr.continueSavedGame = function(userId, gameId, $target) {
-        _triggerEventWithData('continue_saved_game', {"userId": userId, "gameId": gameId}, $target);
+    stateMgr.continueSavedGame = function($target) {
+        _triggerEvent('continue_saved_game', $target);
     };
 
     stateMgr.gameRunning = function($target) {

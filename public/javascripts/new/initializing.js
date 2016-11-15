@@ -3,18 +3,14 @@ var sw = sw || {};
 (function($){
     const $loadModal = $('#loadingModal');
 
-    var userId,
-        inProgressGameId;
-
     $(document).on('state-initializing', function(event){
         $loadModal.modal('show');
 
-        sw.ajax.get('/users/' + event.userId + '/games?inprogress=true&limit=1', function(data){
+        sw.ajax.get('/users/' + sw.stateManager.userId + '/games?inprogress=true&limit=1', function(data){
             if(data.length === 0){
-                sw.stateManager.configureNewGame(event.userId);
+                sw.stateManager.configureNewGame();
             }else{
-                userId = event.userId;
-                inProgressGameId = data[0].id;
+                sw.stateManager.gameId = data[0].id;
                 $('#continueGameModal').modal('show');
             }
 
@@ -24,11 +20,11 @@ var sw = sw || {};
 
     $('#btnContinueGame').click(function(event){
         $('#continueGameModal').modal('hide');
-        sw.stateManager.continueSavedGame(userId, inProgressGameId);
+        sw.stateManager.continueSavedGame();
     });
 
     $('#btnNewGame').click(function(event){
         $('#continueGameModal').modal('hide');
-        sw.stateManager.configureNewGame(userId);
+        sw.stateManager.configureNewGame();
     });
 })(jQuery);

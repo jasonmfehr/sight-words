@@ -7,13 +7,10 @@ var sw = sw || {};
         $spnMinLevel = $('#spnMinLevel'),
         $spnMaxLevel = $('#spnMaxLevel');
 
-    var userId,
-        minLevel,
+    var minLevel,
         maxLevel;
 
     $(document).on('state-configure_new_game', function(event){
-        userId = event.userId;
-
         $newGameLevelSlider.on('slide', function(event){
             _refreshSlider(event.value);
         });
@@ -28,7 +25,7 @@ var sw = sw || {};
     });
 
     $('#btnConfigureNewGame').click(function(event){
-        sw.stateManager.startNewGame(userId, minLevel, maxLevel);
+        sw.stateManager.startNewGame(minLevel, maxLevel);
     });
 
     function _refreshSlider(arrVal) {
@@ -40,10 +37,11 @@ var sw = sw || {};
 
     $(document).on('state-start_new_game', function(event){
         $loadModal.modal('show');
-        sw.ajax.post('/users/' + event.userId + '/games', {"minLevel": event.minLevel, "maxLevel": event.maxLevel}, function(data){
-            //TODO - start here, words are in data.words
-            console.log("got here")
+        sw.ajax.post('/users/' + sw.stateManager.userId + '/games', {"minLevel": event.minLevel, "maxLevel": event.maxLevel}, function(data){
+            sw.stateManager.words = data.words;
+            sw.stateManager.gameId = data.id;
             $loadModal.modal('hide');
+            //TODO start here with throwing a next word event
         });
     });
 })(jQuery);

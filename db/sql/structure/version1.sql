@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS games_words
 (
     game_id uuid NOT NULL,
     word_id uuid NOT NULL,
-    status character varying(250) NOT NULL,
+    status smallint NOT NULL,
     attempts smallint NOT NULL,
     elapsed_time smallint NOT NULL,
     CONSTRAINT games_words_pkey PRIMARY KEY (game_id, word_id),

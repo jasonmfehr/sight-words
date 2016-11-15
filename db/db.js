@@ -145,7 +145,7 @@ function _addGameWords(gameId, minLevel, maxLevel, callback) {
         if (err) throw err;
 
         client.query({
-            "text": "INSERT INTO games_words(game_id, word_id, status, attempts, elapsed_time) (SELECT $1, id, '', 0, 0 FROM words WHERE difficulty >= $2 AND difficulty <= $3);",
+            "text": "INSERT INTO games_words(game_id, word_id, status, attempts, elapsed_time) (SELECT $1, id, 0, 0, 0 FROM words WHERE difficulty >= $2 AND difficulty <= $3);",
             "name": "addGameWords",
             "values": [gameId, minLevel, maxLevel]},
             function(err, results){

@@ -5,6 +5,10 @@ var sw = sw || {};
         const $loadModal = $('#loadingModal');
         $loadModal.modal('show');
 
+        sw.stateManager.userId = undefined;
+        sw.stateManager.gameId = undefined;
+        sw.stateManager.words = undefined;
+
         getAvailableUsers(function(data){
             const $userSelect = $('#userSelect');
 
