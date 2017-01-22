@@ -1,3 +1,4 @@
+//KEEP
 var sw = sw || {};
 sw.timer = sw.timer || {};
 
@@ -8,10 +9,20 @@ sw.timer = sw.timer || {};
   timer.start = function() {
     timeTracker = new Array();
     timeTrackerTick();
+
+    return timer;
+  }
+
+  timer.clear = function() {
+      timeTracker = new Array();
+
+      return timer;
   }
 
   timer.pause = function() {
-    timeTracker.push(Date.now());
+    timeTrackerTick();
+
+    return timer;
   }
 
   timer.getTime = function() {

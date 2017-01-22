@@ -38,10 +38,12 @@ var sw = sw || {};
     $(document).on('state-start_new_game', function(event){
         $loadModal.modal('show');
         sw.ajax.post('/users/' + sw.stateManager.userId + '/games', {"minLevel": event.minLevel, "maxLevel": event.maxLevel}, function(data){
-            sw.stateManager.words = data.words;
+            sw.wordManager.words = data.words;
+            sw.stateManager.wordCountChanged();
             sw.stateManager.gameId = data.id;
             $loadModal.modal('hide');
-            //TODO start here with throwing a next word event
+            sw.stateManager.nextWord();
+            sw.ui.enableButtonsWithDelay(false);
         });
     });
 })(jQuery);

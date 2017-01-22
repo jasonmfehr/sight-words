@@ -7,7 +7,7 @@ var sw = sw || {};
 
         sw.stateManager.userId = undefined;
         sw.stateManager.gameId = undefined;
-        sw.stateManager.words = undefined;
+        sw.wordManager.words = undefined;
 
         getAvailableUsers(function(data){
             const $userSelect = $('#userSelect');

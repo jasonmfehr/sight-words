@@ -2,6 +2,7 @@ var sw = sw || {};
 
 (function(sw, $) {
 
+  /*
   const
     FONT_SIZE_CLASS_PREFIX = 'fs', FONT_SIZE_COUNT = 10,
     FONT_CLASS_PREFIX = 'font', FONT_COUNT = 12,
@@ -25,6 +26,7 @@ var sw = sw || {};
     ALL_FONT_COLOR_CLASSES += ' ' + FONT_COLOR_CLASS_PREFIX + i;
   }
 
+
   $('#btnOk').click(function() {
     disableButtons();
     sw.wordSuccess($('#sightWord').text());
@@ -44,6 +46,7 @@ var sw = sw || {};
     generate(sw.goBack());
     enableButtonsWithDelay(false);
   });
+  */
 
   $('#startOver').click(function() {
     window.location.reload();
@@ -54,6 +57,7 @@ var sw = sw || {};
   });
 
     $(document).ready(function() {
+        sw.ui.disableButtons();
         sw.stateManager.userSelect();
         /*
         const $loadModal = $('#loadingModal');
@@ -82,7 +86,7 @@ var sw = sw || {};
         */
     });
 
-
+    /*
   function generate(word) {
     var $sightWordContainer = $('#sightWord');
 
@@ -103,7 +107,9 @@ var sw = sw || {};
 
     sw.timer.start();
   }
+  */
 
+  /*
   function updateProgressBar() {
     var $pb = $('#completedProgress'),
         wordCount = sw.countTotalWords(),
@@ -115,6 +121,7 @@ var sw = sw || {};
 
     return wordCount === completedWords;
   }
+  */
 
   $(document).on('show.bs.modal', function(e) {
     if(e.target.id === 'reportModal'){
@@ -163,6 +170,7 @@ var sw = sw || {};
     }
   }
 
+  /*
   function disableButtons() {
     $('#btnOk').attr('disabled', true);
     $('#btnTryAgain').attr('disabled', true);
@@ -180,5 +188,6 @@ var sw = sw || {};
   function enableButtonsWithDelay(enableGoBack) {
     setTimeout(enableButtons, 250, enableGoBack);
   }
+  */
 
 })(sw, jQuery);

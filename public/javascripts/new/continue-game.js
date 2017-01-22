@@ -7,9 +7,12 @@ var sw = sw || {};
         $loadModal.modal('show');
 
         sw.ajax.get('/games/' + sw.stateManager.gameId + '/words', function(data){
-            sw.stateManager.words = data.words;
+            sw.wordManager.words = data.words;
+            sw.wordManager.refreshStats();
+            sw.stateManager.wordCountChanged();
             $loadModal.modal('hide');
-            //TODO start here with throwing a next word event
+            sw.stateManager.nextWord();
+            sw.ui.enableButtonsWithDelay(false);
         });
     });
 })(jQuery);

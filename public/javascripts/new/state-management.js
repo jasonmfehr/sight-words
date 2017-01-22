@@ -36,6 +36,10 @@ sw.stateManager = sw.stateManager || {};
         _triggerEvent('continue_saved_game', $target);
     };
 
+    stateMgr.wordCountChanged = function($target) {
+        _triggerEvent('word_count_changed', $target);
+    };
+
     stateMgr.gameRunning = function($target) {
         currentState = 'game_running';
         $target.trigger($.Event('state-game_running'));
@@ -54,6 +58,26 @@ sw.stateManager = sw.stateManager || {};
     stateMgr.gameComplete = function($target) {
         currentState = 'game_complete';
         $target.trigger($.Event('state-game_complete'));
+    };
+
+    stateMgr.nextWord = function($target) {
+        currentState = 'next_word';
+        $target.trigger($.Event('state-next_word'));
+    };
+
+    stateMgr.wordSuccess = function($target) {
+        currentState = 'word_success';
+        $target.trigger($.Event('state-word_success'));
+    };
+
+    stateMgr.wordFail = function($target) {
+        currentState = 'word_fail';
+        $target.trigger($.Event('state-word_fail'));
+    };
+
+    stateMgr.goBack = function($target) {
+        currentState = 'go_back';
+        $target.trigger($.Event('state-go_back'));
     };
 
     function _triggerEvent(eventName, $target) {
