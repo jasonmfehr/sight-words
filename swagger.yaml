@@ -82,6 +82,52 @@ paths:
           description: failed to create a game
           schema:
             $ref: '#/definitions/Error'
+  /games/levels:
+    get:
+      summary: returns the loweset and highest possible game levels
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/GameLevel'
+  /games/{gameId}/words:
+    get:
+      summary: retrieves all data for a single game
+      parameters:
+        - name: gameId
+          in: path
+          type: string
+          required: true
+          description: GUID of the game who's data will be retrieved
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/Game'
+  /games/{gameId}/words/{wordId}:
+    put:
+      summary: updates data about a single word within a single game
+      parameters:
+        - name: gameId
+          in: path
+          type: string
+          required: true
+          description: GUID of the game who's word will be updated
+        - name: wordId
+          in: path
+          type: string
+          required: true
+          description: GUID of the word within the game to update
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WordData'
+      responses:
+        400:
+          description: failed to update the word
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   User:
@@ -137,20 +183,14 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Word'
-  Word:
+  WordData:
     type: object
+    description: editable properties of a word
     required:
-      - game_id
-      - word_id
       - status
       - attempts
       - elapsed_time
-      - word
     properties:
-      game_id:
-        type: string
-      word_id:
-        type: string
       status:
         type: integer
         enum: [0, 1, 2]
@@ -170,10 +210,23 @@ definitions:
         description: |
           number of milliseconds that has been spent working on this word
           during this game
-      word:
-        type: string
-        description: |
-          the actual word
+  Word:
+    allOf:
+      - $ref: '#/definitions/WordData'
+      - type: object
+        required:
+          - game_id
+          - word_id
+          - word
+        properties:
+          game_id:
+            type: string
+          word_id:
+            type: string
+          word:
+            type: string
+            description: |
+              the actual word
   GameLevel:
     type: object
     required:
