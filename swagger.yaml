@@ -1,0 +1,197 @@
+swagger: '2.0'
+info:
+  title: Sightwords API
+  description: Let's play a sightwords game
+  version: "1.0.0"
+host: fehr-sightwords.herokuapp.com
+schemes:
+  - http
+basePath: /api
+produces:
+  - application/json
+paths:
+  /users:
+    get:
+      summary: gets all user names
+      description: returns an array of all users
+      parameters:
+        - name: includeInProgress
+          in: query
+          type: boolean
+          required: false
+          description: |
+            specifies if the additional property 'hasInProgressGame' will be
+            returned and that property indicates whether or not the user has an
+            in-progress game
+      responses:
+        200:
+          description: successful retrieve of users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /users/{userId}/games:
+    parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: GUID of the user who's games will be retrieved
+    get:
+      summary: gets all games for a provided user
+      description: returns an array of all games for a user
+      parameters:
+        - name: inprogress
+          in: query
+          type: boolean
+          required: false
+          description: |
+            indicates if only games that are in progress should be returned,
+            default is false
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          minimum: 0
+          description: |
+            indicates the maximum number of games to return
+      responses:
+        200:
+          description: successful retrieve of games for a user
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Game'
+    post:
+      summary: creates a new game
+      description: |
+        for a given user, creates a new game with specified bounds for the
+        word difficulty
+      parameters:
+        - name: gameLevel
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GameLevel'
+      responses:
+        200:
+          description: successfully created game
+          schema:
+            $ref: '#/definitions/Game'
+        400:
+          description: failed to create a game
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  User:
+    type: object
+    required:
+      - id
+      - user_name
+    properties:
+      id:
+        type: string
+        description: GUID of the user
+      user_name:
+        type: string
+        description: name of the user
+      hasInProgressGame:
+        type: string
+        description: indicates if the user has a game currently in progress
+  Game:
+    type: object
+    required:
+      - id
+      - in_progress
+      - start_time
+      - end_time
+      - min_level
+      - max_level
+    properties:
+      id:
+        type: string
+        description: GUID of the game
+      in_progress:
+        type: boolean
+        description: indicates if the game is in progress or completed
+      start_time:
+        type: string
+        format: date-time
+        description: ISO8601 datetime that the game started
+      end_time:
+        type: string
+        format: date-time
+        description: |
+          ISO8601 datetime that the game finished, will be null if the
+          game is still in progress
+      min_level:
+        type: integer
+        description: |
+          minimum level of difficulty for the words in this particular game
+      max_level:
+        type: integer
+        description: |
+          maximum level of difficulty for the words in this particular game
+      words:
+        type: array
+        items:
+          $ref: '#/definitions/Word'
+  Word:
+    type: object
+    required:
+      - game_id
+      - word_id
+      - status
+      - attempts
+      - elapsed_time
+      - word
+    properties:
+      game_id:
+        type: string
+      word_id:
+        type: string
+      status:
+        type: integer
+        enum: [0, 1, 2]
+        description: |
+          indicates the status of this word during this game, 0 indicates
+          the word has not been shown yet, 1 indicates the word was
+          completed successfully, and 2 indicates the word was not
+          completed successfully and must be shown later
+      attempts:
+        type: integer
+        minimum: 0
+        description: |
+          number of times this word has been shown during this game
+      elapsed_time:
+        type: integer
+        minimum: 0
+        description: |
+          number of milliseconds that has been spent working on this word
+          during this game
+      word:
+        type: string
+        description: |
+          the actual word
+  GameLevel:
+    type: object
+    required:
+      - minLevel
+      - maxLevel
+    properties:
+      minLevel:
+        type: integer
+        minimum: 0
+        description: lower bound (inclusive) of word difficulty
+      maxLevel:
+        type: integer
+        minimum: 0
+        description: upper bound (inclusive) of word difficulty
+  Error:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
