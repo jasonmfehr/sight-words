@@ -190,7 +190,7 @@ exports.getGameLevels = (callback) => {
         }
 
         client.query({
-            "text": "SELECT min(difficulty) as min, max(difficulty) as max FROM words",
+            "text": "SELECT min(difficulty) as minLevel, max(difficulty) as maxLevel FROM words",
             "name": "getGameLevels"},
             function(err, results){
                 done();
