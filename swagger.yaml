@@ -124,6 +124,8 @@ paths:
           schema:
             $ref: '#/definitions/WordData'
       responses:
+        200:
+          description: success
         400:
           description: failed to update the word
           schema:
