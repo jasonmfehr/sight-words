@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome to Sight Words!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheets/overrides.css">
     <link rel="stylesheet" href="stylesheets/fonts.css">
     <link rel="stylesheet" href="stylesheets/buttons.css">
-    <link rel="stylesheet" href="stylesheets/spinner.css">
   </head>
   <body>
+    
     <!-- reload confirmation modal -->
     <div id="reloadConfirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reloadConfirmModalBody">
       <div class="modal-dialog modal-sm">
@@ -30,7 +29,7 @@
         </div>
       </div>
     </div>
-
+    
     <!-- report modal -->
     <div id="reportModal" class="modal fade" tabindex="-1" role="dialog" aria-label="progress report table">
       <div class="modal-dialog">
@@ -60,7 +59,7 @@
         </div>
       </div>
     </div>
-
+    
     <!-- pause modal -->
     <div id="pauseModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pauseModalLabel" data-mode="start">
       <div class="modal-dialog modal-sm">
@@ -74,71 +73,11 @@
         </div>
       </div>
     </div>
-
-    <!-- loading modal -->
-    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-label="loading indicator" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5>Loading...</h4>
-          </div>
-          <div class="modal-body">
-            <div class="loader">Loading...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- user select modal -->
-    <div id="userSelectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="userSelectModalLabel" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p id="userSelectModalLabel">Select the person who is going to brush up on their sight words:</p>
-            <select id="userSelect"></select>
-          </div>
-          <div class="modal-footer">
-            <button id="userSelectModalButton" type="button" class="btn btn-default" data-dismiss="modal" disabled>Select</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- continue saved game modal -->
-    <div id="continueGameModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="continueGameModalLabel" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p id="continueGameModalLabel">An in-progress game exists.  Would you like to continue the game or start a new game?</p>
-          </div>
-          <div class="modal-footer">
-            <button id="btnContinueGame" type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
-            <button id="btnNewGame" type="button" class="btn btn-default" data-dismiss="modal">New Game</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- configure new game modal -->
-    <div id="newGameModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newGameModalLabel" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p id="newGameModalLabel">Select the minimum and maximum levels for the words in the new game.</p>
-            <p>Min: <span id="spnMinLevel"></span></p>
-            <p>Max: <span id="spnMaxLevel"></span></p>
-            <input id="sliderGameLevel" type="text" />
-          </div>
-          <div class="modal-footer">
-            <button id="btnConfigureNewGame" type="button" class="btn btn-default" data-dismiss="modal">Start</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    
+    
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-
+        
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -148,7 +87,7 @@
           </button>
           <span class="navbar-brand">Sight Words</span>
         </div>
-
+        
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="modal" data-target="#reloadConfirmModal">Start Over</a></li>
@@ -168,7 +107,7 @@
         </div>
       </div>
     </nav>
-
+    
     <div class="container">
       <div id="mainContainer">
         <div class="row">
@@ -237,25 +176,15 @@
       </div>
 
     </div>
-
-
+    
+      
     <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
-
-    <script src="javascripts/sight-words.js"></script>
-    <script src="javascripts/words.js"></script>
-    <script src="javascripts/helpers.js"></script>
-    <script src="javascripts/user.js"></script>
-    <script src="javascripts/timer.js"></script>
-
-    <script src="javascripts/new/sw-ajax.js"></script>
-    <script src="javascripts/new/state-management.js"></script>
-    <script src="javascripts/new/word-management.js"></script>
-    <script src="javascripts/new/user-select.js"></script>
-    <script src="javascripts/new/initializing.js"></script>
-    <script src="javascripts/new/continue-game.js"></script>
-    <script src="javascripts/new/new-game.js"></script>
-    <script src="javascripts/new/sw-ui.js"></script>
+    
+    <script src="js/sight-words.js"></script>
+    <script src="js/words.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/timer.js"></script>
   </body>
 </html>
