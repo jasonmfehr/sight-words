@@ -11,5 +11,7 @@ function return_to_prevdir {
 
 trap return_to_prevdir EXIT
 
+rm -f plan.bin
+
 terraform init
-terraform plan -var-file=terraform.tfvars
+terraform plan -var-file=terraform.tfvars -out=plan.bin
