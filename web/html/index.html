@@ -65,7 +65,39 @@
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-body">
-            <p id="pauseModalLabel">Tap the button below to get started!</p>
+            <p id="pauseModalLabel">Select the minimum and maximum level of words to display:</p>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="ddMinWorkLevel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Minimum
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="ddMinWorkLevel">
+                <li><a href="#">Grade: K, Level: 0</a></li>
+                <li><a href="#">Grade: K, Level: 1</a></li>
+                <li><a href="#">Grade: K, Level: 2</a></li>
+                <li><a href="#">Grade: K, Level: 3</a></li>
+                <li><a href="#">Grade: K, Level: 4</a></li>
+                <li><a href="#">Grade: K, Level: 5</a></li>
+                <li><a href="#">Grade: K, Level: 6</a></li>
+                <li><a href="#">Grade: K, Level: 7</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="ddMaxWorkLevel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Maximum
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="ddMaxWorkLevel">
+                <li><a href="#">Grade: K, Level: 0</a></li>
+                <li><a href="#">Grade: K, Level: 1</a></li>
+                <li><a href="#">Grade: K, Level: 2</a></li>
+                <li><a href="#">Grade: K, Level: 3</a></li>
+                <li><a href="#">Grade: K, Level: 4</a></li>
+                <li><a href="#">Grade: K, Level: 5</a></li>
+                <li><a href="#">Grade: K, Level: 6</a></li>
+                <li><a href="#">Grade: K, Level: 7</a></li>
+              </ul>
+            </div>
           </div>
           <div class="modal-footer">
             <button id="pauseModalButton" type="button" class="btn btn-default" data-dismiss="modal">Start</button>
@@ -92,17 +124,6 @@
           <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="modal" data-target="#reloadConfirmModal">Start Over</a></li>
             <li><a id="navReport" href="#" data-toggle="modal" data-target="#reportModal">Report</a></li>
-            <li><a id="navSave" href="#">Save</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maddy <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a id="navUserTrends" href="#">Trends</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a id="navUserLogout" href="#">Log out</a></li>
-              </ul>
-            </li>
           </ul>
         </div>
       </div>
